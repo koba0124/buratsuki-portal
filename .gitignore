@@ -34,4 +34,5 @@ desktop.ini
 
 /node_modules/
 /public/assets/js/materialize.js
+/public/assets/js/template.js
 /public/assets/css/app.css
