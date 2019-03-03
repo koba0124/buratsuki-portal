@@ -14,8 +14,21 @@
 <?= $content ?? ''; ?>
 </main>
 <?= View::render('template/footer'); ?>
+<div style="display: none;"></div>
 <?= Asset::js('materialize.js'); ?>
 <?= Asset::js('template.js'); ?>
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+	<?php $errors = $errors ?? []; ?>
+	<?php foreach ($errors as $error): ?>
+		M.toast({html: '<?= $error ?>', classes: 'red'});
+	<?php endforeach; ?>
+	<?php $messages = $messages ?? []; ?>
+	<?php foreach ($messages as $message): ?>
+		M.toast({html: '<?= $message ?>', classes: 'teal'});
+	<?php endforeach; ?>
+	});
+</script>
 <?= Asset::render('add_js'); ?>
 </body>
 </html>
