@@ -18,13 +18,13 @@ class Create_Users
 				'profile_fields' => ['type' => 'text'],
 				'created_at' => ['constraint' => 11, 'type' => 'int', 'unsigned' => true],
 				'updated_at' => ['constraint' => 11, 'type' => 'int', 'unsigned' => true],
-	        ],
-	        ['id'],
-	        false,
-	        'InnoDB',
-	        'utf8_unicode_ci'
-    	);
-    	\DBUtil::create_index('users', ['username', 'email'] ,'unique', 'unique');
+			],
+			['id'],
+			false,
+			'InnoDB',
+			'utf8_unicode_ci'
+		);
+		\DBUtil::create_index('users', ['username', 'email'] ,'unique', 'unique');
 	}
 
 	public function down()
