@@ -15,12 +15,12 @@ class Create_Sessions
 				'created' => ['constraint' => 10, 'type' => 'int', 'unsigned' => true],
 				'updated' => ['constraint' => 10, 'type' => 'int', 'unsigned' => true],
 				'payload' => ['type' => 'longtext'],
-	        ],
-	        ['session_id'],
-	        false,
-	        'InnoDB',
-	        'utf8_unicode_ci'
-    	);
+			],
+			['session_id'],
+			false,
+			'InnoDB',
+			'utf8_unicode_ci'
+		);
 	}
 
 	public function down()
