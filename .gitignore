@@ -33,7 +33,6 @@ desktop.ini
 /fuel/app/config/crypt.php
 
 /node_modules/
-/public/assets/js/materialize.js
-/public/assets/js/template.js
-/public/assets/css/app.css
+/public/assets/js/*.js
+/public/assets/css/*.css
 /mix-manifest.json

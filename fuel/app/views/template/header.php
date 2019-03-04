@@ -12,6 +12,7 @@
 	</li>
 	<?php endif; ?>
 	<li><?= Html::anchor('/', '<i class="material-icons">home</i>TOP'); ?></li>
+	<li><?= Html::anchor('/cards', '<i class="material-icons">find_in_page</i>カード'); ?></li>
 	<li><div class="divider"></div></li>
 	<?php if (Auth::check()): ?>
 	<li><?= Html::anchor('/home', 'マイページ'); ?></li>
@@ -31,6 +32,7 @@
 			<?= Html::anchor(Input::uri(), $title ?? '', ['class' => 'hide-on-large-only', 'style' => 'font-size: 1.3em;']); ?>
 			<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 			<ul class="right hide-on-med-and-down">
+				<li><?= Html::anchor('/cards', 'カード'); ?></li>
 				<?php if (Auth::check()): ?>
 				<li><?= Html::anchor('/home', 'マイページ'); ?></li>
 				<?php else: ?>
