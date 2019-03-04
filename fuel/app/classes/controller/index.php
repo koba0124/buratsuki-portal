@@ -11,6 +11,9 @@ class Controller_Index extends Controller_Template
 	{
 		$this->response_status = 404;
 		$this->template->title = 'Not Found';
+		$this->template->breadcrumbs = [
+			'#' => 'Not Found',
+		];
 		$this->template->content = View::forge('404');
 	}
 }
