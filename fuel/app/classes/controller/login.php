@@ -8,6 +8,9 @@ class Controller_Login extends Controller_Template
 			$this->template->messages = [$logout_message];
 		}
 		$this->template->title = 'ログイン';
+		$this->template->breadcrumbs = [
+			'/login' => 'ログイン',
+		];
 		$this->template->content = View::forge('login');
 	}
 

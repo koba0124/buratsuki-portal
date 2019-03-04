@@ -6,5 +6,10 @@ class Controller_Test extends Controller_Template
 	public function action_index()
 	{
 		$this->template->title = 'テスト';
+		$this->template->breadcrumbs = [
+			'/test' => 'テスト',
+			'/test' => 'テスト',
+			'/test' => 'テスト',
+		];
 	}
 }
