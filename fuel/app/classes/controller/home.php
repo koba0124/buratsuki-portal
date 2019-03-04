@@ -16,5 +16,8 @@ class Controller_Home extends Controller_Template
 			$this->template->messages = [$login_message];
 		}
 		$this->template->title = 'マイページ';
+		$this->template->breadcrumbs = [
+			'/home' => 'マイページ',
+		];
 	}
 }

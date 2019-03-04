@@ -13,6 +13,9 @@ class Controller_Register extends Controller_Template
 	public function get_index()
 	{
 		$this->template->title = 'ユーザ登録';
+		$this->template->breadcrumbs = [
+			'/register' => 'ユーザ登録',
+		];
 		$this->template->content = View::forge('register');
 		$this->template->content->classes = [];
 		foreach (self::FIELDS as $field) {
