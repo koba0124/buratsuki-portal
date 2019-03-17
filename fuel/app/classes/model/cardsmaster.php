@@ -143,4 +143,21 @@ class Model_CardsMaster
 		$record['deck_display'] = self::DECKS[$record['deck']] ?? '-';
 		return $record;
 	}
+
+	public static function get_card_ids_list($type = null)
+	{
+		$query = DB::select('card_id')
+					->from(self::TABLE_NAME);
+		$cache_name = 'cardmaster_card_ids';
+		if ($type !== null) {
+			$query->where('type', '=', $type);
+			$cache_name .= '_' . $type;
+		}
+		$records = $query->cached(3600, $cache_name)->execute()->as_array();
+		if ($records === []) {
+			return [];
+		}
+		$list = array_column($records, 'card_id');
+		return $list;
+	}
 }

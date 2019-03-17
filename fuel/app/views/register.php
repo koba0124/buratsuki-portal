@@ -4,7 +4,7 @@
 	<div class="row">
 		<div class="col s12 l7 input-field">
 			<?= Form::input('username', Input::post('username'), ['required' => true, 'class' => $classes['username']]); ?>
-			<?= Form::label('ユーザID', 'form_username'); ?><br>
+			<?= Form::label('ユーザID', 'username'); ?><br>
 			半角英数字・アンダースコア4文字以上で入力してください。
 		</div>
 		<div class="col s12 l7 input-field">

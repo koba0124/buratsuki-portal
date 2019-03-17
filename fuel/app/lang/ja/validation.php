@@ -21,4 +21,8 @@ return array(
 	'exists_user'      => '『:label』は存在しません',
 	'valid_username'   => '『:label』に使用できない文字が含まれています',
 	'valid_watchword'  => '『:label』が違います',
+	'valid_twitter'    => '『:label』は不正です',
+	'valid_occupation_id' => '『:param:1』の職業は存在しません',
+	'valid_minor_improvement_id' => '『:param:1』の小進歩は存在しません',
+	'valid_major_improvement_id' => '『:param:1』の大進歩は存在しません',
 );
