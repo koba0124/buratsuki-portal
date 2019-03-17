@@ -94,6 +94,15 @@ class Model_CardsMaster
 		return $query->execute()->as_array();
 	}
 
+	public static function get_list_by_card_ids($card_ids)
+	{
+		$query = DB::select('card_id', 'card_id_display', 'japanese_name', 'deck', 'type')
+					->from(self::TABLE_NAME)
+					->where('card_id', 'in', $card_ids)
+					->order_by('card_id', 'asc');
+		return $query->execute()->as_array();
+	}
+
 	public static function count_list($type, $deck, $name)
 	{
 		$query = DB::select(DB::expr('COUNT(*) AS count'))
