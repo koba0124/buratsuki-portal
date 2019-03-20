@@ -137,6 +137,58 @@ class Controller_Users extends Controller_Template
 		Response::redirect('/users/view/' . Auth::get_screen_name());
 	}
 
+	public function get_icon()
+	{
+		$this->template->title = '編集';
+		$this->template->breadcrumbs = [
+			'/users' => 'メンバー',
+			'/users/icon' => 'アイコン登録',
+		];
+		$this->template->content = View::forge('users/icon');
+
+		$username = Auth::get_screen_name();
+		if (! $username) {
+			Response::redirect('/login');
+		}
+		$this->template->content->classes = [];
+		Asset::js(['users_edit.js'], [], 'add_js');
+		$this->template->content->data = Model_Users::get_by_user_id($username);
+	}
+
+	public function post_icon()
+	{
+		$this->get_icon();
+		if (! Security::check_token()) {
+			$this->template->errors = ['再度送信してください'];
+			return;
+		}
+		$config = [
+			'path' => DOCROOT.'assets/img/upload/users/',
+			'ext_whitelist' => ['jpg', 'jpeg', 'png', 'gif'],
+			'new_name' => Auth::get_screen_name(),
+			'auto_rename' => false,
+			'overwrite' => true,
+			'max_size' => 5 * 1024 * 1024,
+			'create_path' => true,
+		];
+		Upload::process($config);
+		if (! Upload::is_valid()) {
+			$errors = Upload::get_errors('icon')['errors'];
+			$this->template->errors = [];
+			foreach ($errors as $error) {
+				$this->template->errors[] = $error['message'];
+			}
+			return;
+		}
+		Upload::save();
+		Auth::update_user([
+			'icon' => 'upload/users/' . Upload::get_files('icon')['saved_as'],
+		]);
+
+		Session::set_flash('users_edit_message', ['アイコンの更新に成功しました']);
+		Response::redirect('/users/view/' . Auth::get_screen_name());
+	}
+
 	private function validation_edit($occupations, $minor_improvements)
 	{
 		$val = Validation::forge();

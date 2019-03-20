@@ -3,10 +3,10 @@
 		<?= $user_data['screen_name'] ?>
 	</h1>
 	<div class="row">
-		<div class="col s12 m4">
-			プロフィール画像
+		<div class="col s4 m3">
+			<?= Asset::img($user_data['icon'], ['alt' => 'icon', 'class' => 'responsive-img circle']); ?>
 		</div>
-		<div class="col s12 m8">
+		<div class="col s12 m9">
 			<dl>
 				<dt class="teal-text">ユーザID</dt>
 				<dd><?= $user_data['username']; ?></dd>

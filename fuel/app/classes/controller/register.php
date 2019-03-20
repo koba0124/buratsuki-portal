@@ -56,6 +56,7 @@ class Controller_Register extends Controller_Template
 				1,
 				[
 					'screen_name' => Input::post('screen_name'),
+					'icon' => 'noimage.png',
 				]
 			);
 		} catch (SimpleUserUpdateException $e) {

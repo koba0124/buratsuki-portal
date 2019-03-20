@@ -5,7 +5,7 @@
 			<div class="background">
 				<?= Asset::img('menubg.png', ['alt' => 'background', 'style' => 'max-width: 100%;']); ?>
 			</div>
-			<?= Html::anchor('/users/' . Auth::get_screen_name(), Asset::img('https://secure.gravatar.com/avatar/baef5cefc09865a4f2e89bee37832559', ['class' => 'circle'])); ?>
+			<?= Html::anchor('/users/' . Auth::get_screen_name(), Asset::img(Auth::get_profile_fields('icon'), ['alt' => 'icon', 'class' => 'circle'])); ?>
 			<span class="white-text name"><?= Auth::get_profile_fields('screen_name'); ?> [<?= Auth::get_screen_name(); ?>]</span>
 			<span class="white-text email"><?= Auth::get_email(); ?></span>
 		</div>
