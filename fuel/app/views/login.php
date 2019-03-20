@@ -7,7 +7,7 @@
 			<?= Form::label('ID / メールアドレス', 'username'); ?>
 		</div>
 		<div class="col s12 l6 input-field">
-			<?= Form::password('password', Input::post('password'), ['required' => true, 'class' => 'validate']); ?>
+			<?= Form::password('password', null, ['required' => true, 'class' => 'validate']); ?>
 			<?= Form::label('パスワード', 'password'); ?>
 		</div>
 		<div class="col s12 input-field">

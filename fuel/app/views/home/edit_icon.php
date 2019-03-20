@@ -12,7 +12,7 @@
 			</div>
 		</div>
 		<div class="col s4 m3">
-			<h3 class="teal-text">現在のアイコン</h3>
+			<h3 class="blue-text">現在のアイコン</h3>
 			<?= Asset::img(Auth::get_profile_fields('icon'), ['alt' => 'icon', 'class' => 'circle responsive-img']); ?>
 		</div>
 		<div class="col s12 input-field">
