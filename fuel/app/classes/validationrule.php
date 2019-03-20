@@ -27,4 +27,32 @@ class ValidationRule
 		return $val === getenv('WATCHWORD');
 	}
 
+	public static function _validation_valid_twitter($val)
+	{
+		return preg_match('/^[0-9a-zA-Z_]+$/u', $val) > 0;
+	}
+
+	public static function _validation_valid_card_id($val)
+	{
+		$card_ids = Model_CardsMaster::get_card_ids_list();
+		return in_array($val, $card_ids);
+	}
+
+	public static function _validation_valid_occupation_id($val)
+	{
+		$card_ids = Model_CardsMaster::get_card_ids_list('occupation');
+		return in_array($val, $card_ids);
+	}
+
+	public static function _validation_valid_minor_improvement_id($val)
+	{
+		$card_ids = Model_CardsMaster::get_card_ids_list('minor_improvement');
+		return in_array($val, $card_ids);
+	}
+
+	public static function _validation_valid_major_improvement_id($val)
+	{
+		$card_ids = Model_CardsMaster::get_card_ids_list('major_improvement');
+		return in_array($val, $card_ids);
+	}
 }

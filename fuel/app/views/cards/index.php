@@ -18,7 +18,7 @@
 			<div class="row">
 				<div class="col s12 input-field">
 					<?= Form::input('n', Input::get('n')); ?>
-					<?= Form::label('カード名', 'form_n'); ?>
+					<?= Form::label('カード名', 'n'); ?>
 				</div>
 				<div class="col s12 input-field">
 					<?= Form::select('d', Input::get('d'), $decks); ?>

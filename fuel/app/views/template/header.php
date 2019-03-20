@@ -5,14 +5,15 @@
 			<div class="background">
 				<?= Asset::img('menubg.png', ['alt' => 'background', 'style' => 'max-width: 100%;']); ?>
 			</div>
-			<?= Html::anchor('/users/' . Auth::get_screen_name(), Asset::img('https://secure.gravatar.com/avatar/baef5cefc09865a4f2e89bee37832559', ['class' => 'circle'])); ?>
-			<span class="white-text name"><?= Auth::get_profile_fields('screen_name'); ?> (<?= Auth::get_screen_name(); ?>)</span>
+			<?= Html::anchor('/users/' . Auth::get_screen_name(), Asset::img(Auth::get_profile_fields('icon'), ['alt' => 'icon', 'class' => 'circle'])); ?>
+			<span class="white-text name"><?= Auth::get_profile_fields('screen_name'); ?> [<?= Auth::get_screen_name(); ?>]</span>
 			<span class="white-text email"><?= Auth::get_email(); ?></span>
 		</div>
 	</li>
 	<?php endif; ?>
 	<li><?= Html::anchor('/', '<i class="material-icons">home</i>TOP'); ?></li>
 	<li><?= Html::anchor('/cards', '<i class="material-icons">find_in_page</i>カード'); ?></li>
+	<li><?= Html::anchor('/users', '<i class="material-icons">people</i>メンバー'); ?></li>
 	<li><div class="divider"></div></li>
 	<?php if (Auth::check()): ?>
 	<li><?= Html::anchor('/home', 'マイページ'); ?></li>
@@ -33,6 +34,7 @@
 			<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 			<ul class="right hide-on-med-and-down">
 				<li><?= Html::anchor('/cards', 'カード'); ?></li>
+				<li><?= Html::anchor('/users', 'メンバー'); ?></li>
 				<?php if (Auth::check()): ?>
 				<li><?= Html::anchor('/home', 'マイページ'); ?></li>
 				<?php else: ?>

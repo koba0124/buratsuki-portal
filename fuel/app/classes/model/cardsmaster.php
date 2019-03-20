@@ -21,6 +21,7 @@ class Model_CardsMaster
 		'FL' => 'FLデッキ',
 		'FR' => 'FRデッキ',
 		'NL' => 'NLデッキ',
+		'BI' => 'BIデッキ',
 		'RA' => 'Aデッキ(リバイズド基本)',
 		'RB' => 'Bデッキ(リバイズド基本)',
 		'LR' => 'Lデッキ(リバイズド基本)',
@@ -94,6 +95,18 @@ class Model_CardsMaster
 		return $query->execute()->as_array();
 	}
 
+	public static function get_list_by_card_ids($card_ids)
+	{
+		if (! count($card_ids)) {
+			return [];
+		}
+		$query = DB::select('card_id', 'card_id_display', 'japanese_name', 'deck', 'type')
+					->from(self::TABLE_NAME)
+					->where('card_id', 'in', $card_ids)
+					->order_by('card_id', 'asc');
+		return $query->execute()->as_array();
+	}
+
 	public static function count_list($type, $deck, $name)
 	{
 		$query = DB::select(DB::expr('COUNT(*) AS count'))
@@ -142,5 +155,22 @@ class Model_CardsMaster
 	{
 		$record['deck_display'] = self::DECKS[$record['deck']] ?? '-';
 		return $record;
+	}
+
+	public static function get_card_ids_list($type = null)
+	{
+		$query = DB::select('card_id')
+					->from(self::TABLE_NAME);
+		$cache_name = 'cardmaster_card_ids';
+		if ($type !== null) {
+			$query->where('type', '=', $type);
+			$cache_name .= '_' . $type;
+		}
+		$records = $query->cached(3600, $cache_name)->execute()->as_array();
+		if ($records === []) {
+			return [];
+		}
+		$list = array_column($records, 'card_id');
+		return $list;
 	}
 }

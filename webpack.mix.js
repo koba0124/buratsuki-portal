@@ -14,4 +14,5 @@ let mix = require('laravel-mix');
 mix.js('resources/js/materialize.js', 'public/assets/js')
 	.js('resources/js/template.js', 'public/assets/js')
 	.js('resources/js/cards_index.js', 'public/assets/js')
+	.js('resources/js/home_edit_profile.js', 'public/assets/js')
 	.sass('resources/sass/app.scss', 'public/assets/css');

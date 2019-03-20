@@ -4,11 +4,11 @@
 	<div class="row">
 		<div class="col s12 l6 input-field">
 			<?= Form::input('username', Input::post('username'), ['required' => true, 'class' => 'validate']); ?>
-			<?= Form::label('ID / メールアドレス', 'form_username'); ?>
+			<?= Form::label('ID / メールアドレス', 'username'); ?>
 		</div>
 		<div class="col s12 l6 input-field">
-			<?= Form::password('password', Input::post('password'), ['required' => true, 'class' => 'validate']); ?>
-			<?= Form::label('パスワード', 'form_password'); ?>
+			<?= Form::password('password', null, ['required' => true, 'class' => 'validate']); ?>
+			<?= Form::label('パスワード', 'password'); ?>
 		</div>
 		<div class="col s12 input-field">
 			<?= Form::submit('submit', 'ログイン', ['class' => 'btn teal']); ?>
