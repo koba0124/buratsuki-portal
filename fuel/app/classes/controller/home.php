@@ -12,6 +12,12 @@ class Controller_Home extends Controller_Template
 		'minor_improvements',
 	];
 
+	const CHANGE_PASSWORD_FIELDS = [
+		'old_password',
+		'new_password',
+		'new_password_check',
+	];
+
 	public function before()
 	{
 		parent::before();
@@ -171,6 +177,45 @@ class Controller_Home extends Controller_Template
 		Response::redirect('/users/view/' . Auth::get_screen_name());
 	}
 
+	public function get_change_password()
+	{
+		$this->template->title = 'パスワード変更';
+		$this->template->breadcrumbs = [
+			'/home' => 'マイページ',
+			'/home/change_password' => 'パスワード変更',
+		];
+		$this->template->content = View::forge('home/change_password');
+	}
+
+	public function post_change_password()
+	{
+		$this->get_change_password();
+		if (! Security::check_token()) {
+			$this->template->errors = ['再度送信してください'];
+			return;
+		}
+		$val = self::validation_change_password();
+		if (! $val->run()) {
+			$errors = $val->error();
+			$this->template->errors = [];
+			foreach ($errors as $key => $error) {
+				$this->template->errors[] = $error->get_message();
+			}
+			return;
+		}
+		try {
+			Auth::update_user([
+				'old_password' => Input::post('old_password'),
+				'password' => Input::post('new_password'),
+			]);
+		} catch (SimpleUserWrongPassword $e) {
+			$this->template->errors = ['古いパスワードが違います'];
+			return;
+		}
+		Session::set_flash('login_message', 'パスワードを変更しました');
+		Response::redirect('home');
+	}
+
 	private function validation_edit_profile($occupations, $minor_improvements)
 	{
 		$val = Validation::forge();
@@ -191,6 +236,19 @@ class Controller_Home extends Controller_Template
 			$val->add('minor_improvements.' . $key, '好きな小進歩' . ($key + 1))
 				->add_rule('valid_minor_improvement_id', $minor_improvement);
 		}
+		return $val;
+	}
+
+	private function validation_change_password()
+	{
+		$val = Validation::forge();
+		$val->add_callable('ValidationRule');
+		$val->add('new_password', '新パスワード')
+			->add_rule('required')
+			->add_rule('min_length', 6);
+		$val->add('new_password_check', '新パスワード(確認)')
+			->add_rule('required')
+			->add_rule('match_field', 'new_password');
 		return $val;
 	}
 }
