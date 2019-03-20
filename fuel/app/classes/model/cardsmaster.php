@@ -97,6 +97,9 @@ class Model_CardsMaster
 
 	public static function get_list_by_card_ids($card_ids)
 	{
+		if (! count($card_ids)) {
+			return [];
+		}
 		$query = DB::select('card_id', 'card_id_display', 'japanese_name', 'deck', 'type')
 					->from(self::TABLE_NAME)
 					->where('card_id', 'in', $card_ids)

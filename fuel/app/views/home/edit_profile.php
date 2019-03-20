@@ -1,5 +1,5 @@
 <div class="container">
-	<p>必要事項を入力してください。アイコンの登録は<?= Html::anchor('users/icon', 'こちら'); ?>からどうぞ。</p>
+	<p>必要事項を入力してください。アイコンの登録は<?= Html::anchor('home/edit_icon', 'こちら'); ?>からどうぞ。</p>
 	<?= Form::open(); ?>
 	<div class="row">
 		<div class="col s12 l7 input-field">

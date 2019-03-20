@@ -46,6 +46,6 @@
 		</div>
 	</div>
 	<?php if ($user_data['username'] === Auth::get_screen_name()): ?>
-	<p class="right-align"><?= Html::anchor('/users/edit', '編集する'); ?></p>
+	<p class="right-align"><?= Html::anchor('/home/edit_profile', '編集する'); ?></p>
 	<?php endif; ?>
 </div>
