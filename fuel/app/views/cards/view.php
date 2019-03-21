@@ -5,7 +5,7 @@
 	</h1>
 	<dl>
 		<dt class="teal-text">デッキ</dt>
-		<dd><?= $card['deck_display']; ?></dd>
+		<dd><?= $card['deck_name']; ?></dd>
 		<?php if ($card['type'] === 'occupation'): ?>
 		<dt class="teal-text">カテゴリー</dt>
 		<dd><?= $card['category'], '+'; ?></dd>

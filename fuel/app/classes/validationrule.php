@@ -29,6 +29,9 @@ class ValidationRule
 
 	public static function _validation_valid_twitter($val)
 	{
+		if (! $val) {
+			return true;
+		}
 		return preg_match('/^[0-9a-zA-Z_]+$/u', $val) > 0;
 	}
 
