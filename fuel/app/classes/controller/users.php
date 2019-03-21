@@ -15,7 +15,6 @@ class Controller_Users extends Controller_Template
 	public function action_view($user_id)
 	{
 		$this->template->content = View::forge('users/view');
-		$this->template->messages = Session::get_flash('users_edit_message', []);
 
 		$user_data = Model_Users::get_by_user_id($user_id);
 		if (! $user_data) {

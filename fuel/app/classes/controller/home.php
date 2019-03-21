@@ -28,10 +28,6 @@ class Controller_Home extends Controller_Template
 
 	public function action_index()
 	{
-		$login_message = Session::get_flash('login_message');
-		if ($login_message) {
-			$this->template->messages = [$login_message];
-		}
 		$this->template->title = 'マイページ';
 		$this->template->breadcrumbs = [
 			'/home' => 'マイページ',
@@ -59,7 +55,7 @@ class Controller_Home extends Controller_Template
 		$this->get_edit_profile();
 
 		if (! Security::check_token()) {
-			$this->template->errors = ['再度送信してください'];
+			$this->template->errors = '再度送信してください';
 			return;
 		}
 
@@ -124,7 +120,7 @@ class Controller_Home extends Controller_Template
 			'minor_improvements' => $minor_improvements,
 		]);
 
-		Session::set_flash('users_edit_message', ['プロフィールの更新に成功しました']);
+		Session::set_flash('messages', 'プロフィールの更新に成功しました');
 		Response::redirect('/users/view/' . Auth::get_screen_name());
 	}
 
@@ -147,7 +143,7 @@ class Controller_Home extends Controller_Template
 	{
 		$this->get_edit_icon();
 		if (! Security::check_token()) {
-			$this->template->errors = ['再度送信してください'];
+			$this->template->errors = '再度送信してください';
 			return;
 		}
 		$config = [
@@ -162,10 +158,7 @@ class Controller_Home extends Controller_Template
 		Upload::process($config);
 		if (! Upload::is_valid()) {
 			$errors = Upload::get_errors('icon')['errors'];
-			$this->template->errors = [];
-			foreach ($errors as $error) {
-				$this->template->errors[] = $error['message'];
-			}
+			$this->template->errors = array_column($errors, 'message');
 			return;
 		}
 		Upload::save();
@@ -173,7 +166,7 @@ class Controller_Home extends Controller_Template
 			'icon' => 'upload/users/' . Upload::get_files('icon')['saved_as'],
 		]);
 
-		Session::set_flash('users_edit_message', ['アイコンの更新に成功しました']);
+		Session::set_flash('messages', 'アイコンの更新に成功しました');
 		Response::redirect('/users/view/' . Auth::get_screen_name());
 	}
 
@@ -191,16 +184,12 @@ class Controller_Home extends Controller_Template
 	{
 		$this->get_change_password();
 		if (! Security::check_token()) {
-			$this->template->errors = ['再度送信してください'];
+			$this->template->errors = '再度送信してください';
 			return;
 		}
 		$val = self::validation_change_password();
 		if (! $val->run()) {
-			$errors = $val->error();
-			$this->template->errors = [];
-			foreach ($errors as $key => $error) {
-				$this->template->errors[] = $error->get_message();
-			}
+			$this->template->errors = array_column($val->error(), 'message');
 			return;
 		}
 		try {
@@ -209,10 +198,10 @@ class Controller_Home extends Controller_Template
 				'password' => Input::post('new_password'),
 			]);
 		} catch (SimpleUserWrongPassword $e) {
-			$this->template->errors = ['古いパスワードが違います'];
+			$this->template->errors = '古いパスワードが違います';
 			return;
 		}
-		Session::set_flash('login_message', 'パスワードを変更しました');
+		Session::set_flash('messages', 'パスワードを変更しました');
 		Response::redirect('home');
 	}
 

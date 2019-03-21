@@ -4,7 +4,7 @@ class Controller_Logout extends Controller
 	public function action_index()
 	{
 		Auth::logout();
-		Session::set_flash('logout_message', 'ログアウトしました');
+		Session::set_flash('messages', 'ログアウトしました');
 		Response::redirect('/login');
 	}
 }

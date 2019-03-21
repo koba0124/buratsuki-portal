@@ -63,11 +63,11 @@ class Controller_Register extends Controller_Template
 			$result = false;
 		}
 		if ($result === false) {
-			$this->template->errors = ['すでに登録されているユーザIDまたはメールアドレスです'];
+			$this->template->errors = 'すでに登録されているユーザIDまたはメールアドレスです';
 			return;
 		}
 		Auth::login(Input::post('username'), Input::post('password'));
-		Session::set_flash('login_message', '登録完了しました');
+		Session::set_flash('messages', '登録完了しました');
 		Response::redirect('home');
 	}
 
