@@ -1,15 +1,6 @@
 <?php
 class Controller_Register extends Controller_Template
 {
-	private const FIELDS = [
-		'username',
-		'screen_name',
-		'email',
-		'password',
-		'password_check',
-		'watchword',
-	];
-
 	public function get_index()
 	{
 		$this->template->title = 'ユーザ登録';
@@ -17,10 +8,7 @@ class Controller_Register extends Controller_Template
 			'/register' => 'ユーザ登録',
 		];
 		$this->template->content = View::forge('register');
-		$this->template->content->classes = [];
-		foreach (self::FIELDS as $field) {
-			$this->template->content->classes[$field] = 'validate';
-		}
+		$this->template->content->error_fields = [];
 	}
 
 	public function post_index()
@@ -32,19 +20,10 @@ class Controller_Register extends Controller_Template
 		}
 		$val = $this->create_val();
 		if (! $val->run()) {
-			$errors = $val->error();
 			$this->template->errors = [];
-			$error_keys = [];
-			foreach ($errors as $key => $error) {
+			foreach ($val->error() as $field => $error) {
 				$this->template->errors[] = $error->get_message();
-				$error_keys[] = $key;
-			}
-			foreach (self::FIELDS as $field) {
-				if (in_array($field, $error_keys)) {
-					$this->template->content->classes[$field] = 'invalid validate';
-				} else {
-					$this->template->content->classes[$field] = 'valid validate';
-				}
+				$this->template->content->error_fields[] = $field;
 			}
 			return;
 		}
@@ -64,6 +43,8 @@ class Controller_Register extends Controller_Template
 		}
 		if ($result === false) {
 			$this->template->errors = 'すでに登録されているユーザIDまたはメールアドレスです';
+			$this->template->content->error_fields[] = 'username';
+			$this->template->content->error_fields[] = 'email';
 			return;
 		}
 		Auth::login(Input::post('username'), Input::post('password'));

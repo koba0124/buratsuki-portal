@@ -1,23 +1,6 @@
 <?php
 class Controller_Home extends Controller_Template
 {
-	const STRING_FIELDS = [
-		'screen_name',
-		'twitter',
-		'comment',
-	];
-
-	const ARRAY_FIELDS = [
-		'occupations',
-		'minor_improvements',
-	];
-
-	const CHANGE_PASSWORD_FIELDS = [
-		'old_password',
-		'new_password',
-		'new_password_check',
-	];
-
 	public function before()
 	{
 		parent::before();
@@ -45,7 +28,7 @@ class Controller_Home extends Controller_Template
 		$this->template->content = View::forge('home/edit_profile');
 
 		$username = Auth::get_screen_name();
-		$this->template->content->classes = [];
+		$this->template->content->error_fields = [];
 		Asset::js(['home_edit_profile.js'], [], 'add_js');
 		$this->template->content->data = Model_Users::get_by_user_id($username);
 	}
@@ -59,6 +42,7 @@ class Controller_Home extends Controller_Template
 			return;
 		}
 
+		// 空要素を詰める
 		$occupations = Input::post('occupations', []);
 		$occupations = array_values(array_filter($occupations, 'strlen'));
 		$minor_improvements = Input::post('minor_improvements', []);
@@ -66,48 +50,13 @@ class Controller_Home extends Controller_Template
 		$this->template->content->occupations = $occupations;
 		$this->template->content->minor_improvements = $minor_improvements;
 
-		$val = $this->validation_edit_profile($occupations, $minor_improvements);
+		$val = self::validation_edit_profile($occupations, $minor_improvements);
 
 		if (! $val->run(['occupations' => $occupations, 'minor_improvements' => $minor_improvements])) {
-			$errors = $val->error();
 			$this->template->errors = [];
-			$error_keys = [];
-			foreach ($errors as $key => $error) {
+			foreach ($val->error() as $key => $error) {
 				$this->template->errors[] = $error->get_message();
-				$error_keys[] = $key;
-			}
-			foreach (self::STRING_FIELDS as $field) {
-				if (in_array($field, $error_keys)) {
-					$this->template->content->classes[$field] = 'invalid validate';
-				} else {
-					$this->template->content->classes[$field] = 'valid validate';
-				}
-			}
-			if (in_array('occupations', $error_keys)) {
-				foreach ($occupations as $key => $occupation) {
-					$this->template->content->classes['occupations'][$key] = 'invalid validate';
-				}
-			} else {
-				foreach ($occupations as $key => $minor_improvement) {
-					if (in_array('occupations.'.$key, $error_keys)) {
-						$this->template->content->classes['occupations'][$key] = 'invalid validate';
-					} else {
-						$this->template->content->classes['occupations'][$key] = 'valid validate';
-					}
-				}
-			}
-			if (in_array('minor_improvements', $error_keys)) {
-				foreach ($minor_improvements as $key => $minor_improvement) {
-					$this->template->content->classes['minor_improvements'][$key] = 'invalid validate';
-				}
-			} else {
-				foreach ($minor_improvements as $key => $minor_improvement) {
-					if (in_array('minor_improvements.'.$key, $error_keys)) {
-						$this->template->content->classes['minor_improvements'][$key] = 'invalid validate';
-					} else {
-						$this->template->content->classes['minor_improvements'][$key] = 'valid validate';
-					}
-				}
+				$this->template->content->error_fields[] = $key;
 			}
 			return;
 		}
@@ -205,13 +154,14 @@ class Controller_Home extends Controller_Template
 		Response::redirect('home');
 	}
 
-	private function validation_edit_profile($occupations, $minor_improvements)
+	private static function validation_edit_profile($occupations, $minor_improvements)
 	{
 		$val = Validation::forge();
 		$val->add_callable('ValidationRule');
 		$val->add('screen_name', '表示名')
 			->add_rule('required');
-		$val->add('twitter', 'Twitter');
+		$val->add('twitter', 'Twitter')
+			->add_rule('valid_twitter');
 		$val->add('comments', 'ひとこと');
 		$val->add('occupations', '好きな職業')
 			->add_rule('array_unique');
@@ -228,7 +178,7 @@ class Controller_Home extends Controller_Template
 		return $val;
 	}
 
-	private function validation_change_password()
+	private static function validation_change_password()
 	{
 		$val = Validation::forge();
 		$val->add_callable('ValidationRule');

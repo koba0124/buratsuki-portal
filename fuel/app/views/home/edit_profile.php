@@ -3,18 +3,18 @@
 	<?= Form::open(); ?>
 	<div class="row">
 		<div class="col s12 l7 input-field">
-			<?= Form::input('screen_name', Input::post('screen_name', Arr::get($data, 'screen_name')), ['required' => true, 'class' => Arr::get($classes, 'screen_name', 'validate')]); ?>
+			<?= Form::input('screen_name', Input::post('screen_name', Arr::get($data, 'screen_name')), ['required' => true, 'class' => Helper::validate_class($error_fields, 'screen_name')]); ?>
 			<?= Form::label('表示名', 'screen_name'); ?>
 		</div>
 		<div class="col s12 l7 input-field">
-			<?= Form::input('twitter', Input::post('twitter', Arr::get($data, 'twitter')), ['class' => Arr::get($classes, 'twitter', 'validate')]); ?>
+			<?= Form::input('twitter', Input::post('twitter', Arr::get($data, 'twitter')), ['class' => Helper::validate_class($error_fields, 'twitter')]); ?>
 			<?= Form::label('Twitterアカウント', 'twitter'); ?>
 			<p>
 				@は不要です
 			</p>
 		</div>
 		<div class="col s12 l7 input-field">
-			<?= Form::textarea('comment', Input::post('comment', Arr::get($data, 'comment')), ['class' => Arr::get($classes, 'comment', 'validate').' materialize-textarea']); ?>
+			<?= Form::textarea('comment', Input::post('comment', Arr::get($data, 'comment')), ['class' => Helper::validate_class($error_fields, 'comment').' materialize-textarea']); ?>
 			<?= Form::label('ひとこと', 'comment'); ?>
 		</div>
 	</div>
@@ -22,7 +22,7 @@
 		<?php $occupations = $occupations ?? Arr::get($data, 'occupations', []); ?>
 		<?php foreach ($occupations as $key => $occupation): ?>
 		<div class="col s4 m3 l2 input-field">
-			<?= Form::input('occupations[]', $occupation, ['class' => Arr::get($classes, 'occupations.'.$key, 'validate'), 'id' => 'form_occupations_'.$key]); ?>
+			<?= Form::input('occupations[]', $occupation, ['class' => Helper::validate_class($error_fields, 'occupations', $key), 'id' => 'form_occupations_'.$key]); ?>
 			<?= Form::label('好きな職業', 'occupations_'.$key); ?>
 		</div>
 		<?php endforeach; ?>
@@ -38,7 +38,7 @@
 		<?php $minor_improvements = $minor_improvements ?? Arr::get($data, 'minor_improvements', []); ?>
 		<?php foreach ($minor_improvements as $key => $minor_improvement): ?>
 		<div class="col s4 m3 l2 input-field">
-			<?= Form::input('minor_improvements[]', $minor_improvement, ['class' => Arr::get($classes, 'minor_improvements.'.$key, 'validate'), 'id' => 'form_minor_improvements_'.$key]); ?>
+			<?= Form::input('minor_improvements[]', $minor_improvement, ['class' => Helper::validate_class($error_fields, 'minor_improvements', $key), 'id' => 'form_minor_improvements_'.$key]); ?>
 			<?= Form::label('好きな小進歩', 'minor_improvements_'.$key); ?>
 		</div>
 		<?php endforeach; ?>
