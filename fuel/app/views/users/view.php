@@ -48,4 +48,15 @@
 	<?php if ($user_data['username'] === Auth::get_screen_name()): ?>
 	<p class="right-align"><?= Html::anchor('/home/edit_profile', '編集する'); ?></p>
 	<?php endif; ?>
+	<h2 class="teal-text">参加したゲーム</h2>
+	<div class="collection">
+		<?php foreach ($games_list as $record): ?>
+		<a class="collection-item" href="<?= Uri::create('games/view/:game_id', ['game_id' => $record['game_id']]); ?>">
+			<?= $record['players_number']; ?>人ゲーム / <?= $record['regulation_name']; ?><?php if ($record['is_moor']) echo '(泥沼)'; ?><br>
+			<?= $record['player_order']; ?>番手 / <?= $record['total_points']; ?>点 / <?= $record['rank']; ?>位<br>
+			[<?= $record['created_at']; ?>]
+		</a>
+		<?php endforeach; ?>
+	</div>
+	<?= Pagination::instance('games')->render(); ?>
 </div>
