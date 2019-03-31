@@ -15,6 +15,14 @@ class Model_CardsMaster
 		'major_improvement' => '大きい進歩',
 	];
 
+	/**
+	 * 条件に合致したカードリストを取得
+	 * @param  array      $type       職業/小さい進歩/大きい進歩のtype番号
+	 * @param  stirng     $deck       デッキ/デッキグループ
+	 * @param  string     $name       名前に含まれる文字列
+	 * @param  Pagination $pagination ページネーション
+	 * @return array      カードレコードの配列
+	 */
 	public static function get_list($type, $deck, $name, $pagination)
 	{
 		$query = DB::select('card_id', 'card_id_display', 'japanese_name', 'deck', 'type')
@@ -26,18 +34,13 @@ class Model_CardsMaster
 		return $query->execute()->as_array();
 	}
 
-	public static function get_list_by_card_ids($card_ids)
-	{
-		if (! count($card_ids)) {
-			return [];
-		}
-		$query = DB::select('card_id', 'card_id_display', 'japanese_name', 'deck', 'type')
-					->from(self::TABLE_NAME)
-					->where('card_id', 'in', $card_ids)
-					->order_by('card_id', 'asc');
-		return $query->execute()->as_array();
-	}
-
+	/**
+	 * 条件に合致するカードの総数を取得
+	 * @param  array  $type 職業/小さい進歩/大きい進歩のtype番号
+	 * @param  stirng $deck デッキ/デッキグループ
+	 * @param  string $name 名前に含まれる文字列
+	 * @return int          カード総数
+	 */
 	public static function count_list($type, $deck, $name)
 	{
 		$query = DB::select(DB::expr('COUNT(*) AS count'))
@@ -46,6 +49,14 @@ class Model_CardsMaster
 		return $query->execute()->as_array()[0]['count'] ?? 0;
 	}
 
+	/**
+	 * カードリストのためのクエリにwhere句を追加
+	 * @param  DB     $query クエリオブジェクト
+	 * @param  array  $type  職業/小さい進歩/大きい進歩のtype番号
+	 * @param  string $deck  デッキ/デッキグループ
+	 * @param  string $name  名前に含まれる文字列
+	 * @return DB            クエリオブジェクト
+	 */
 	private static function append_where_for_list($query, $type, $deck, $name)
 	{
 		$deck_groups_list = Model_DeckGroupsMaster::get_list();
@@ -69,21 +80,28 @@ class Model_CardsMaster
 		return $query;
 	}
 
-	public static function get_by_card_id($card_id)
+	/**
+	 * id配列に対応するカードリストを取得
+	 * @param  array $card_ids カードIDの配列
+	 * @return array           カードレコードの配列
+	 */
+	public static function get_list_by_card_ids($card_ids)
 	{
-		$query = DB::select()
-					->from(self::TABLE_NAME)
-					->where('card_id', '=', $card_id)
-					->limit(1)
-					->join(Model_DecksMaster::TABLE_NAME, 'INNER')
-					->on(self::TABLE_NAME . '.deck', '=', Model_DecksMaster::TABLE_NAME . '.deck');
-		$record = $query->execute()->as_array()[0] ?? null;
-		if (! $record) {
-			return null;
+		if (! count($card_ids)) {
+			return [];
 		}
-		return $record;
+		$query = DB::select('card_id', 'card_id_display', 'japanese_name', 'deck', 'type')
+					->from(self::TABLE_NAME)
+					->where('card_id', 'in', $card_ids)
+					->order_by('card_id', 'asc');
+		return $query->execute()->as_array();
 	}
 
+	/**
+	 * カードタイプに対応するカードIDのリストを取得
+	 * @param  string $type occupationなどカードタイプ文字列、nullなら全種
+	 * @return array        カードIDの配列
+	 */
 	public static function get_card_ids_list($type = null)
 	{
 		$query = DB::select('card_id')
@@ -99,5 +117,25 @@ class Model_CardsMaster
 		}
 		$list = array_column($records, 'card_id');
 		return $list;
+	}
+
+	/**
+	 * idに対応するカード詳細を取得
+	 * @param  stirng $card_id カードIDの配列
+	 * @return array           カードレコード
+	 */
+	public static function get_by_card_id($card_id)
+	{
+		$query = DB::select()
+					->from(self::TABLE_NAME)
+					->where('card_id', '=', $card_id)
+					->limit(1)
+					->join(Model_DecksMaster::TABLE_NAME, 'INNER')
+					->on(self::TABLE_NAME . '.deck', '=', Model_DecksMaster::TABLE_NAME . '.deck');
+		$record = $query->execute()->as_array()[0] ?? null;
+		if (! $record) {
+			return null;
+		}
+		return $record;
 	}
 }

@@ -13,6 +13,7 @@ return array (
         4 => '005_create_games',
         5 => '006_create_regulationsmaster',
         6 => '007_create_gamescards',
+        7 => '008_create_cardsreview',
       ),
     ),
     'module' => 
