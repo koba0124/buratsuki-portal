@@ -12,6 +12,7 @@
 	</li>
 	<?php endif; ?>
 	<li><?= Html::anchor('/', '<i class="material-icons">home</i>TOP'); ?></li>
+	<li><?= Html::anchor('/games', '<i class="material-icons">star_rate</i>戦績'); ?></li>
 	<li><?= Html::anchor('/cards', '<i class="material-icons">find_in_page</i>カード'); ?></li>
 	<li><?= Html::anchor('/users', '<i class="material-icons">people</i>メンバー'); ?></li>
 	<li><div class="divider"></div></li>
@@ -33,6 +34,7 @@
 			<?= Html::anchor(Input::uri(), $title ?? '', ['class' => 'hide-on-large-only', 'style' => 'font-size: 1.3em;']); ?>
 			<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 			<ul class="right hide-on-med-and-down">
+				<li><?= Html::anchor('/games', '戦績'); ?></li>
 				<li><?= Html::anchor('/cards', 'カード'); ?></li>
 				<li><?= Html::anchor('/users', 'メンバー'); ?></li>
 				<?php if (Auth::check()): ?>

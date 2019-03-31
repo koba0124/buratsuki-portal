@@ -31,5 +31,15 @@ class Controller_Users extends Controller_Template
 		$minor_improvements = Model_CardsMaster::get_list_by_card_ids($user_data['minor_improvements'] ?? []);
 		$this->template->content->occupations = $occupations;
 		$this->template->content->minor_improvements = $minor_improvements;
+
+		$count = Model_GamesScores::count_list_for_users($user_id);
+		$pagination = Pagination::forge('games', [
+			'pagination_url' => Uri::create('users/view/'. $user_id),
+			'uri_segment' => 'p',
+			'per_page' => 10,
+			'total_items' => $count,
+		]);
+
+		$this->template->content->games_list = Model_GamesScores::get_list_for_users($user_id, $pagination);
 	}
 }

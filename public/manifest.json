@@ -1,0 +1,15 @@
+{
+    "name": "ぶらつき学生ポータル",
+    "short_name": "ぶらつき学生ポータル",
+    "lang": "ja",
+    "icons": [
+        {
+            "src": "/android-chrome-144x144.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#ff9800",
+    "background_color": "#ff9800",
+    "display": "standalone"
+}

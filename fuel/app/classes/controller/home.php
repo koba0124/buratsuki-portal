@@ -16,6 +16,9 @@ class Controller_Home extends Controller_Template
 			'/home' => 'マイページ',
 		];
 		$this->template->content = View::forge('home/index');
+
+		$username = Auth::get_screen_name();
+		$this->template->content->games_list = Model_GamesScores::get_list_for_home($username);
 	}
 
 	public function get_edit_profile()

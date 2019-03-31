@@ -9,6 +9,12 @@ class Model_CardsMaster
 		'3' => 'major_improvement',
 	];
 
+	const TYPES_LABEL = [
+		'occupation' => '職業',
+		'minor_improvement' => '小さい進歩',
+		'major_improvement' => '大きい進歩',
+	];
+
 	public static function get_list($type, $deck, $name, $pagination)
 	{
 		$query = DB::select('card_id', 'card_id_display', 'japanese_name', 'deck', 'type')
