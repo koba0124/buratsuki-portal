@@ -6,9 +6,10 @@
 return array(
 	'default' => array(
 		'connection'  => array(
-			'dsn'        => 'mysql:host=localhost;dbname=fuel_dev',
+			'dsn'        => 'mysql:host=localhost;dbname=buratsuki-portal',
 			'username'   => 'root',
-			'password'   => 'root',
+			'password'   => 'arthur',
 		),
+		'profiling'  => true,
 	),
 );

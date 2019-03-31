@@ -29,9 +29,12 @@ desktop.ini
 
 # dynamically generated files
 /fuel/app/logs/*/*/*
+/fuel/app/cache/*
 /fuel/app/cache/*/*
 /fuel/app/config/crypt.php
 
 /node_modules/
-/public/assets/js/materialize.js
-/public/assets/css/app.css
+/public/assets/js/*.js
+/public/assets/css/*.css
+/mix-manifest.json
+/public/assets/img/upload/*/*
