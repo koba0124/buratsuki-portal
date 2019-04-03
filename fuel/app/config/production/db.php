@@ -11,4 +11,5 @@ return array(
 			'password'   => 'super_secret_password',
 		),
 	),
+	'profiling'  => true,
 );
