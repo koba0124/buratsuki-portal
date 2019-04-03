@@ -101,6 +101,8 @@ class Controller_Cards extends Controller_Template
 			'/cards' => 'カード',
 			'/cards/view/'.$card_id => $this->template->title,
 		];
+
+		$this->template->review_data = Model_CardsReview::get_list_by_card_id($card_id);
 	}
 
 	/**
