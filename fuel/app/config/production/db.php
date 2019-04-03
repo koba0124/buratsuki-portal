@@ -10,5 +10,6 @@ return array(
 			'username'   => 'fuel_app',
 			'password'   => 'super_secret_password',
 		),
+		'profiling'  => false,
 	),
 );
