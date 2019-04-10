@@ -26,26 +26,24 @@
 		<dt class="teal-text">説明</dt>
 		<dd><?= nl2br($card['description']); ?></dd>
 	</dl>
-	<?php if (Auth::check()): ?>
-	<?= Html::anchor('cards/review/' . $card['card_id'], 'カード評価を入力する'); ?>
-	<?php endif; ?>
-	<h2 class="teal-text">カード評価</h2>
-	<div class="collection">
-		<?php foreach ($review_data as $record): ?>
-		<div class="collection-item avatar">
-			<?= Html::anchor('users/view/' . $record['username'], Asset::img($record['icon'], ['alt' => 'icon', 'class' => 'circle'])); ?>
-			<?= Html::anchor('users/view/' . $record['username'], $record['screen_name'] . ' (' . $record['username'] . ')'); ?>
-			<div class="row">
-				<div class="col s4 m2">
-					<span class="grey-text" style="font-size: 1.5rem; line-height: 2rem;">
-						<?= $record['review_points']; ?>点
-					</span>
-				</div>
-				<div class="col s8 m10">
-					<?= nl2br($record['review_comment']); ?>
-				</div>
-			</div>
+	<h2 class="teal-text">評価入力</h2>
+	<?= Form::open(); ?>
+	<div class="row">
+		<div class="col s12 l7 input-field">
+			<?= Form::input('review_points', Input::post('review_points', Arr::get($review_data, 'review_points')), ['required' => true, 'max' => 10, 'min' => 0, 'type' => 'number', 'step' => 0.1, 'class' => Helper::validate_class($error_fields, 'review_points')]); ?>
+			<?= Form::label('評価点', 'review_points'); ?>
 		</div>
-		<?php endforeach; ?>
+		<div class="col s12 l5">
+			<p>10点満点で入力してください。</p>
+		</div>
+		<div class="col s12 l7 input-field">
+			<?= Form::textarea('review_comment', Input::post('review_comment', Arr::get($review_data, 'review_comment')), ['class' => Helper::validate_class($error_fields, 'review_comment').' materialize-textarea']); ?>
+			<?= Form::label('ひとこと', 'review_comment'); ?>
+		</div>
+		<div class="col s12 input-field">
+			<?= Form::submit('submit', '更新', ['class' => 'btn teal']); ?>
+		</div>
 	</div>
+	<?= Form::csrf(); ?>
+	<?= Form::close(); ?>
 </div>

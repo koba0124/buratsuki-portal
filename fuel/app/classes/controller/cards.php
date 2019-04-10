@@ -102,7 +102,7 @@ class Controller_Cards extends Controller_Template
 			'/cards/view/'.$card_id => $this->template->title,
 		];
 
-		$this->template->review_data = Model_CardsReview::get_list_by_card_id($card_id);
+		$this->template->content->review_data = Model_CardsReview::get_list_by_card_id($card_id);
 	}
 
 	/**
@@ -128,7 +128,9 @@ class Controller_Cards extends Controller_Template
 			'/cards/review/'.$card_id => '評価',
 		];
 
+		$this->template->content->card = $card;
 		$this->template->content->review_data = Model_CardsReview::get($card_id, Auth::get_screen_name());
+		$this->template->content->error_fields = [];
 	}
 
 	/**
@@ -170,7 +172,7 @@ class Controller_Cards extends Controller_Template
 	private static function validation_review()
 	{
 		$val = Validation::forge();
-		$val->add('review_points', 'カード点数')
+		$val->add('review_points', '評価点')
 			->add_rule('required');
 		$val->add('review_comment', 'ひとこと');
 		return $val;

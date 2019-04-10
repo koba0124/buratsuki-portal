@@ -50,7 +50,8 @@ INSERT INTO `cards_review`
 (`card_id`, `username`, `review_points`, `review_comment`)
 VALUES
 (:card_id, :username, :review_points, :review_comment)
-ON DUPLICATE KEY UPDATE;
+ON DUPLICATE KEY UPDATE
+`review_points` = :review_points, `review_comment` = :review_comment;
 EOT;
 		$query = DB::query($query_string)
 					->bind('card_id', $card_id)
