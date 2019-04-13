@@ -21,8 +21,11 @@
 	<meta property="og:url" content="<?= Uri::current(); ?>">
 	<meta property="og:site_name" content="ぶらつき学生ポータル">
 	<meta property="og:description" content="<?= $description ?? '東京工業大学アグリコラサークル「ぶらつき学生連盟」の戦績管理ツールです。拡張入りアグリコラのプレイ結果を記録しています。'; ?>">
-	<?php if (isset($ogp_image)): ?>
+	<?php if (isset($ogp_image_large)): ?>
 	<meta property="twitter:card" content="summary_large_image">
+	<meta property="og:image" content="<?= Asset::get_file($ogp_image_large, 'img'); ?>">
+	<?php elseif (isset($ogp_image)): ?>
+	<meta property="twitter:card" content="summary">
 	<meta property="og:image" content="<?= Asset::get_file($ogp_image, 'img'); ?>">
 	<?php else: ?>
 	<meta property="twitter:card" content="summary">
