@@ -102,6 +102,8 @@ class Controller_Cards extends Controller_Template
 			'/cards/view/'.$card_id => $this->template->title,
 		];
 
+		$this->template->description = $this->template->title . ' のカード詳細ページです。このカードの効果や戦績、メンバーによる評価をご覧いただけます。';
+
 		$review_data = Model_CardsReview::get_list_by_card_id($card_id);
 		$this->template->content->review_data = $review_data;
 		if ($review_data !== []) {
