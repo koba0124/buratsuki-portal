@@ -102,7 +102,12 @@ class Controller_Cards extends Controller_Template
 			'/cards/view/'.$card_id => $this->template->title,
 		];
 
-		$this->template->content->review_data = Model_CardsReview::get_list_by_card_id($card_id);
+		$review_data = Model_CardsReview::get_list_by_card_id($card_id);
+		$this->template->content->review_data = $review_data;
+		if ($review_data !== []) {
+			$review_points_avg = Arr::average(array_column($review_data, 'review_points'));
+			$this->template->content->review_points_avg = sprintf('%.1f', $review_points_avg);
+		}
 	}
 
 	/**

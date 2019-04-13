@@ -31,14 +31,17 @@
 	<?php endif; ?>
 	<h2 class="teal-text">カード評価</h2>
 	<div class="collection">
+		<div class="collection-item">
+			平均評価：<span style="font-size: 1.5rem; line-height: 2rem;"><?= $review_points_avg ?? '--' ?></span>点
+		</div>
 		<?php foreach ($review_data as $record): ?>
 		<div class="collection-item avatar">
 			<?= Html::anchor('users/view/' . $record['username'], Asset::img($record['icon'], ['alt' => 'icon', 'class' => 'circle'])); ?>
 			<?= Html::anchor('users/view/' . $record['username'], $record['screen_name'] . ' (' . $record['username'] . ')'); ?>
 			<div class="row">
 				<div class="col s4 m2">
-					<span class="grey-text" style="font-size: 1.5rem; line-height: 2rem;">
-						<?= $record['review_points']; ?>点
+					<span class="grey-text">
+						<span style="font-size: 1.5rem; line-height: 2rem;"><?= $record['review_points']; ?></span>点
 					</span>
 				</div>
 				<div class="col s8 m10">
