@@ -63,4 +63,45 @@ class Model_GamesCards
 					->where('game_id', '=', $game_id);
 		return $query->execute();
 	}
+
+	public static function count_by_card_id($card_id)
+	{
+		$query = DB::select(DB::expr('COUNT(*) AS count'))
+					->from(self::TABLE_NAME)
+					->where('card_id', '=', $card_id);
+		return $query->execute()->as_array()[0]['count'] ?? 0;
+	}
+
+	public static function get_list_by_card_id($card_id)
+	{
+		$columns = [
+			self::TABLE_NAME . '.card_id',
+			Model_GamesScores::TABLE_NAME . '.game_id',
+			Model_GamesScores::TABLE_NAME . '.player_order',
+			Model_GamesScores::TABLE_NAME . '.username',
+			'total_points',
+			'rank',
+			Model_Games::TABLE_NAME . '.created_at',
+			'players_number',
+			'regulation_name',
+			'is_moor',
+			Model_Users::TABLE_NAME . '.profile_fields',
+		];
+		$query = DB::select_array($columns)
+					->from(self::TABLE_NAME)
+					->where('card_id', '=', $card_id)
+					->join(Model_GamesScores::TABLE_NAME)
+					->on(self::TABLE_NAME . '.game_id', '=', Model_GamesScores::TABLE_NAME . '.game_id')
+					->and_on(self::TABLE_NAME . '.player_order', '=', Model_GamesScores::TABLE_NAME . '.player_order')
+					->join(Model_Games::TABLE_NAME)
+					->on(self::TABLE_NAME . '.game_id', '=', Model_Games::TABLE_NAME . '.game_id')
+					->join(Model_RegulationsMaster::TABLE_NAME)
+					->on(Model_Games::TABLE_NAME . '.regulation_type', '=', Model_RegulationsMaster::TABLE_NAME . '.regulation_type')
+					->join(Model_Users::TABLE_NAME, 'left outer')
+					->on(Model_GamesScores::TABLE_NAME . '.username', '=', Model_Users::TABLE_NAME . '.username')
+					->order_by(Model_Games::TABLE_NAME . '.created_at', 'desc');
+		$records = $query->execute()->as_array();
+		$records = Model_Users::append_profile_fields($records);
+		return $records;
+	}
 }

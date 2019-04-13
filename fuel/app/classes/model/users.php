@@ -46,6 +46,7 @@ class Model_Users
 	public static function append_profile_fields($records)
 	{
 		foreach ($records as &$record) {
+			if (! isset($record['profile_fields'])) continue;
 			$profile_fields = unserialize($record['profile_fields']);
 			foreach ($profile_fields as $field => $value) {
 				$record[$field] = $value;

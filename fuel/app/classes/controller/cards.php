@@ -108,6 +108,23 @@ class Controller_Cards extends Controller_Template
 			$review_points_avg = Arr::average(array_column($review_data, 'review_points'));
 			$this->template->content->review_points_avg = sprintf('%.1f', $review_points_avg);
 		}
+
+		$count = Model_GamesCards::count_by_card_id($card_id);
+		$this->template->content->count = $count;
+		// $pagination = Pagination::forge('games', [
+		// 	'pagination_url' => Uri::create('cards/view/'. $card_id),
+		// 	'uri_segment' => 'p',
+		// 	'per_page' => 10,
+		// 	'total_items' => $count,
+		// ]);
+		$games_data = Model_GamesCards::get_list_by_card_id($card_id);
+		$this->template->content->games_data = $games_data;
+
+		$count_rank_first = array_reduce($games_data, function($c, $i) {
+			if ($i['rank'] === '1') $c++;
+			return $c;
+		}, 0);
+		$this->template->content->count_rank_first = $count_rank_first;
 	}
 
 	/**

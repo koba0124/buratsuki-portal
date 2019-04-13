@@ -51,4 +51,21 @@
 		</div>
 		<?php endforeach; ?>
 	</div>
+	<?php if ($card['type'] !== 'major_improvement'): ?>
+	<h2 class="teal-text">使用されたゲーム</h2>
+	<div class="collection">
+		<div class="collection-item">
+			1位回数：<span style="font-size: 1.5rem; line-height: 2rem;"><?= $count_rank_first ?? '--' ?></span>回 / <?= $count; ?>回
+		</div>
+		<?php foreach ($games_data as $record): ?>
+		<a href="<?= Uri::create('games/view/:game_id#player:player_order', ['game_id' => $record['game_id'], 'player_order' => $record['player_order']]); ?>" class="collection-item avatar">
+			<?= Asset::img($record['icon'] ?? 'noimage.png', ['alt' => 'icon', 'class' => 'circle']); ?>
+			<?= $record['screen_name'] ?? 'unknown' ?> (<?= $record['username'] ?? 'unknown'; ?>)<br>
+			<?= $record['players_number']; ?>人ゲーム / <?= $record['regulation_name']; ?><?php if ($record['is_moor']) echo '(泥沼)'; ?><br>
+			<?= $record['player_order']; ?>番手 / <?= $record['total_points']; ?>点 / <?= $record['rank']; ?>位<br>
+			[<?= $record['created_at']; ?>]
+		</a>
+		<?php endforeach; ?>
+	</div>
+	<?php endif; ?>
 </div>
