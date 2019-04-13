@@ -10,11 +10,11 @@
 			<dl>
 				<dt class="teal-text">ユーザID</dt>
 				<dd><?= $user_data['username']; ?></dd>
-				<?php if (isset($user_data['twitter'])): ?>
+				<?php if (! empty($user_data['twitter'] ?? null)): ?>
 				<dt class="teal-text">Twitter</dt>
 				<dd><?= Html::anchor('https://twitter.com/'.$user_data['twitter'], '@'.$user_data['twitter'], ['target' => '_blank', 'rel' => 'noopener']); ?></dd>
 				<?php endif; ?>
-				<?php if (isset($user_data['comment'])): ?>
+				<?php if (! empty($user_data['comment'] ?? null)): ?>
 				<dt class="teal-text">ひとこと</dt>
 				<dd><?= nl2br($user_data['comment']); ?></dd>
 				<?php endif; ?>

@@ -4,6 +4,10 @@ class Model_DecksMaster
 	const TABLE_NAME = 'decks_master';
 	const CACHE_NAME = 'decks_master';
 
+	/**
+	 * デッキのリストを取得
+	 * @return array デッキの配列
+	 */
 	public static function get_list()
 	{
 		try {

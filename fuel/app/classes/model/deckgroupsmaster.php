@@ -4,6 +4,10 @@ class Model_DeckGroupsMaster
 	const TABLE_NAME = 'deck_groups_master';
 	const CACHE_NAME = 'deck_groups_master';
 
+	/**
+	 * デッキグループのリストを取得
+	 * @return array デッキグループの配列
+	 */
 	public static function get_list()
 	{
 		try {
