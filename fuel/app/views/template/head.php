@@ -13,14 +13,14 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="msapplication-config" content="/browserconfig.xml">
 	<meta name="theme-color" content="#ff9800">
-	<?= Html::meta('description', $description ?? '東京工業大学アグリコラサークル「ぶらつき学生連盟」の戦績管理ツールです。拡張入りアグリコラのプレイ結果を記録しています。'); ?>
+	<?= Html::meta('description', $description ?? '東京工業大学アグリコラサークル「ぶらつき学生連盟」の戦績管理サイトです。拡張入りアグリコラのプレイ結果を記録しています。'); ?>
 	<meta name="author" content="東京工業大学アグリコラサークル「ぶらつき学生連盟」">
 	<!-- OGP [ -->
 	<meta property="og:title" content="<?= $title ?? ''; ?> | ぶらつき学生ポータル">
 	<meta property="og:type" content="website">
 	<meta property="og:url" content="<?= Uri::current(); ?>">
 	<meta property="og:site_name" content="ぶらつき学生ポータル">
-	<meta property="og:description" content="<?= $description ?? '東京工業大学アグリコラサークル「ぶらつき学生連盟」の戦績管理ツールです。拡張入りアグリコラのプレイ結果を記録しています。'; ?>">
+	<meta property="og:description" content="<?= $description ?? '東京工業大学アグリコラサークル「ぶらつき学生連盟」の戦績管理サイトです。拡張入りアグリコラのプレイ結果を記録しています。'; ?>">
 	<?php if (isset($ogp_image_large)): ?>
 	<meta property="twitter:card" content="summary_large_image">
 	<meta property="og:image" content="<?= Asset::get_file($ogp_image_large, 'img'); ?>">
