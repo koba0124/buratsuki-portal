@@ -27,6 +27,9 @@ class Controller_Users extends Controller_Template
 			'/members/view/'.$user_id => $this->template->title,
 		];
 
+		$this->template->ogp_image = $user_data['icon'] ?? 'noimage.png';
+		$this->template->description = $user_data['screen_name'] . 'のプロフィールです。このメンバーの戦績が確認できます。' . $user_data['screen_name'] . 'のひとこと「' . mb_strimwidth($user_data['comment'] ?? '……', 0, 30, '……') . '」';
+
 		$occupations = Model_CardsMaster::get_list_by_card_ids($user_data['occupations'] ?? []);
 		$minor_improvements = Model_CardsMaster::get_list_by_card_ids($user_data['minor_improvements'] ?? []);
 		$this->template->content->occupations = $occupations;

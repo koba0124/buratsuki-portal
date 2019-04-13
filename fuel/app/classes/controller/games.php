@@ -267,13 +267,32 @@ class Controller_Games extends Controller_Template
 		];
 
 		$this->template->content->data = $data;
-		$this->template->content->score_data = Model_GamesScores::get_for_view($game_id);
+		$score_data = Model_GamesScores::get_for_view($game_id);
+		$this->template->content->score_data = $score_data;
 		$this->template->content->cards_data = Model_GamesCards::get_for_view($game_id);
 		$this->template->content->basic_points_list = self::BASIC_POINTS_LIST;
 		$this->template->content->advanced_points_list = self::ADVANCED_POINTS_LIST;
 		$this->template->content->cards_type_list = Model_CardsMaster::TYPES_LABEL;
 
 		Asset::js(['games_view.js'], [], 'add_js');
+
+		$sort = array_column($score_data, 'rank');
+		array_multisort($sort, SORT_DESC, $score_data);
+		$this->template->ogp_image_large = array_reduce($score_data, function($c, $i) {
+			if (! empty($i['image'])) $c = $i['image'];
+			return $c;
+		}, 'noimage_ogp.png');
+		$this->template->description = date('Y/m/d', strtotime($data['created_at'])) . 'に行われた' . $data['regulation_name'];
+		if ($data['is_moor']) {
+			$this->template->description .= '(泥沼)';
+		}
+		$this->template->description .= $data['players_number'] .'人ゲームの戦績です。';
+
+		foreach ($score_data as $record) {
+			if ($record['total_points'] === null) return;
+		}
+		$score_rank_first = $score_data[$data['players_number'] - 1];
+		$this->template->description .= '1位は' . $score_rank_first['total_points'] . '点の' . ($score_rank_first['profile_fields']['screen_name'] ?? 'unknown') . '(' . $score_rank_first['player_order'] . '番手)でした。';
 	}
 
 	public function post_view($game_id)
