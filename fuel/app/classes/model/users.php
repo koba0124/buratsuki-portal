@@ -7,10 +7,13 @@ class Model_Users
 	 * 全ユーザのリストを取得
 	 * @return array ユーザレコードの配列
 	 */
-	public static function get_list()
+	public static function get_list($is_include_guest = false)
 	{
 		$query = DB::select('username', 'profile_fields')
 					->from(self::TABLE_NAME);
+		if (! $is_include_guest) {
+			$query->where('username', '!=', 'Guest');
+		}
 		$records = $query->execute()->as_array();
 		$records = self::append_profile_fields($records);
 		return $records;
