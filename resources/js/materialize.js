@@ -5071,7 +5071,7 @@ $jscomp.polyfill = function (e, r, p, m) {
     Effect.wrapInput($$('.waves-effect'));
 
     if ('ontouchstart' in window) {
-      document.body.addEventListener('touchstart', showEffect, false);
+      document.body.addEventListener('touchstart', showEffect, {passive: true});
     }
 
     document.body.addEventListener('mousedown', showEffect, false);
@@ -5092,7 +5092,7 @@ $jscomp.polyfill = function (e, r, p, m) {
     }
 
     if ('ontouchstart' in window) {
-      element.addEventListener('touchstart', showEffect, false);
+      element.addEventListener('touchstart', showEffect, {passive: true});
     }
 
     element.addEventListener('mousedown', showEffect, false);
