@@ -20,6 +20,7 @@
 				<a href="https://draft.buratsuki.work/" target="_blank" rel="noopener" class="collection-item">
 					Agricola Online Draft (β版)
 				</a>
+				<a href="https://github.com/Arthur1/buratsuki-portal" target="_blank" rel="noopener" class="collection-item">Github - Arthur1/buratsuki-portal</a>
 			</div>
 		</div>
 	</div>
