@@ -39,7 +39,7 @@
 	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#f59b35">
 	<link rel="shortcut icon" href="/favicon.ico">
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Noto+Sans+JP">
-	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons"">
-	<?= Asset::css('app.css'); ?>
-	<?= Asset::render('add_css'); ?>
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<?= Asset::css('app.css', [], null, true); ?>
+	<?= Asset::render('add_css', true); ?>
 </head>
