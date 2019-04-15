@@ -7,6 +7,14 @@
 <?= $content ?? ''; ?>
 </main>
 <?= View::render('template/footer'); ?>
+<script>
+	requestAnimationFrame(function(e) {
+		e = document.createElement('link');
+		e.rel = 'stylesheet';
+		e.href = '<?= Asset::get_file('app_async.css', 'css') ?>';
+		document.head.appendChild(e);
+	});
+</script>
 <?= Asset::js('materialize.js'); ?>
 <?= Asset::js('template.js'); ?>
 <script>
