@@ -3,6 +3,11 @@ class Model_GamesScores
 {
 	const TABLE_NAME = 'games_scores';
 
+	/**
+	 * GamesScoresレコード作成
+	 * @param  string $game_id ゲームID
+	 * @param  array  $players ユーザIDの配列(番手順)
+	 */
 	public static function create($game_id, $players)
 	{
 		$created_at = date('Y-m-d H:i:s');
@@ -22,6 +27,11 @@ class Model_GamesScores
 		$query->execute();
 	}
 
+	/**
+	 * マイページ用に未編集戦績レコードを取得
+	 * @param  string $username ユーザID
+	 * @return aaray            GamesScoresレコードの配列
+	 */
 	public static function get_list_for_home($username)
 	{
 		$columns = [
@@ -47,6 +57,12 @@ class Model_GamesScores
 		return $query->execute()->as_array();
 	}
 
+	/**
+	 * 戦績編集用にGamesScoresレコードを取得
+	 * @param  string $game_id      ゲームID
+	 * @param  int    $player_order 番手
+	 * @return array                GamesScoresレコード
+	 */
 	public static function get_for_edit($game_id, $player_order)
 	{
 		$query = DB::select()
@@ -65,6 +81,12 @@ class Model_GamesScores
 		return $records[0];
 	}
 
+	/**
+	 * 戦績更新(データはPOSTの値を利用)
+	 * @param  string $game_id      ゲームID
+	 * @param  int    $player_order 番手
+	 * @param  string $image        盤面画像のパス
+	 */
 	public static function update($game_id, $player_order, $image)
 	{
 		$values = [];
@@ -100,6 +122,11 @@ class Model_GamesScores
 		$query->execute();
 	}
 
+	/**
+	 * 戦績表示用にGamesScoresレコードを取得
+	 * @param  string $game_id ゲームID
+	 * @return array           GamesScoresレコードの配列
+	 */
 	public static function get_for_view($game_id)
 	{
 		$query = DB::select()
@@ -118,6 +145,10 @@ class Model_GamesScores
 		return array_column($records, null, 'player_order');
 	}
 
+	/**
+	 * ゲーム削除
+	 * @param  string $game_id ゲームID
+	 */
 	public static function delete($game_id)
 	{
 		$query = DB::delete(self::TABLE_NAME)
@@ -125,6 +156,11 @@ class Model_GamesScores
 		return $query->execute();
 	}
 
+	/**
+	 * 順位を更新
+	 * @param string $game_id   ゲームID
+	 * @param array  $rank_list 順位の配列(番手順)
+	 */
 	public static function set_rank($game_id, $rank_list)
 	{
 		foreach ($rank_list as $order => $rank) {
@@ -136,6 +172,11 @@ class Model_GamesScores
 		}
 	}
 
+	/**
+	 * メンバーごとのゲーム数を数える
+	 * @param  string $username ユーザID
+	 * @return int              指定したユーザが参加したゲーム数
+	 */
 	public static function count_list_for_users($username)
 	{
 		$query = DB::select(DB::expr('COUNT(*) AS count'))
@@ -144,6 +185,12 @@ class Model_GamesScores
 		return $query->execute()->as_array()[0]['count'] ?? 0;
 	}
 
+	/**
+	 * メンバー詳細用にGamesScoresレコードのリストを取得
+	 * @param  string     $username   ユーザID
+	 * @param  Pagination $pagination
+	 * @return array                  GamesScoresレコードの配列
+	 */
 	public static function get_list_for_users($username, $pagination)
 	{
 		$query = DB::select()
@@ -159,6 +206,10 @@ class Model_GamesScores
 		return $query->execute()->as_array();
 	}
 
+	/**
+	 * すべての戦績データを取得(全ゲーム順位自動計算用)
+	 * @return array game_id[] => GamesScoresレコード[]
+	 */
 	public static function get_all()
 	{
 		$query = DB::select()

@@ -3,6 +3,12 @@ class Model_GamesCards
 {
 	const TABLE_NAME = 'games_cards';
 
+	/**
+	 * 戦績編集用にGamesCardsレコード取得
+	 * @param  string $game_id      ゲームID
+	 * @param  int    $player_order 番手
+	 * @return array                GamesCardsレコード
+	 */
 	public static function get_for_edit($game_id, $player_order)
 	{
 		$query = DB::select()
@@ -23,6 +29,12 @@ class Model_GamesCards
 		return $list;
 	}
 
+	/**
+	 * 戦績更新
+	 * @param  string $game_id      ゲームID
+	 * @param  int    $player_order 番手
+	 * @param  array  $cards_list   カードタイプごとに分割されたカードIDの配列
+	 */
 	public static function update($game_id, $player_order, $cards_list)
 	{
 		$delete_query = DB::delete(self::TABLE_NAME)
@@ -39,6 +51,11 @@ class Model_GamesCards
 		$query->execute();
 	}
 
+	/**
+	 * 戦績詳細表示用にGamesCardsレコード取得
+	 * @param  string $game_id ゲームID
+	 * @return array           番手 => カードタイプ => GamesCardsレコードの配列
+	 */
 	public static function get_for_view($game_id)
 	{
 		$query = DB::select()
@@ -57,6 +74,10 @@ class Model_GamesCards
 		return $data;
 	}
 
+	/**
+	 * ゲーム削除
+	 * @param  string $game_id ゲームID
+	 */
 	public static function delete($game_id)
 	{
 		$query = DB::delete(self::TABLE_NAME)
@@ -64,6 +85,11 @@ class Model_GamesCards
 		return $query->execute();
 	}
 
+	/**
+	 * 指定したカードが使われた回数を数える
+	 * @param  string $card_id カードID
+	 * @return int             使用された回数
+	 */
 	public static function count_by_card_id($card_id)
 	{
 		$query = DB::select(DB::expr('COUNT(*) AS count'))
@@ -72,6 +98,11 @@ class Model_GamesCards
 		return $query->execute()->as_array()[0]['count'] ?? 0;
 	}
 
+	/**
+	 * カード詳細表示用に、指定したカードが使われたゲームのレコードを取得
+	 * @param  string $card_id カードID
+	 * @return array           GamesScoresの配列
+	 */
 	public static function get_list_by_card_id($card_id)
 	{
 		$columns = [
