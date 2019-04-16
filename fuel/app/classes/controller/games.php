@@ -49,6 +49,7 @@ class Controller_Games extends Controller_Template
 		$this->template->content->error_fields = [];
 		$this->template->content->players_number_list = self::PLAYERS_NUMBER_LIST;
 		$this->template->content->regulation_type_list = Model_RegulationsMaster::get_list();
+		$this->template->content->players_list = Model_Users::get_list(true);
 		Asset::js(['games_create.js'], [], 'add_js');
 	}
 
