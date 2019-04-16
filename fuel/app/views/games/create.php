@@ -1,6 +1,6 @@
 <div class="container">
 	<p>ゲームの詳細を入力してください。</p>
-	<?= Form::open(); ?>
+	<?= Form::open(['autocomplete' => 'off']); ?>
 	<div class="row">
 		<div class="col s12 m7 input-field">
 			<?= Form::select('players_number', Input::post('players_number'), $players_number_list, ['required' => true, 'class' => Helper::validate_class($error_fields, 'players_number')]); ?>
@@ -26,7 +26,7 @@
 		</div>
 		<?php foreach (range(0, 5) as $key): ?>
 		<div class="col s12 m6 input-field" id="formBox_players<?= $key; ?>">
-			<?= Form::input('players[]', Input::post('players.'.$key), ['required' => true, 'class' => Helper::validate_class($error_fields, 'players', $key), 'id' => 'form_players'.$key]); ?>
+			<?= Form::input('players[]', Input::post('players.'.$key), ['required' => true, 'class' => Helper::validate_class($error_fields, 'players', $key), 'id' => 'form_players'.$key, 'class' => 'autocomplete']); ?>
 			<?= Form::label('ユーザID('.($key+1).'番手)', 'players'.$key); ?>
 		</div>
 		<?php endforeach; ?>
