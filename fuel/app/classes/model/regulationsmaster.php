@@ -4,6 +4,10 @@ class Model_RegulationsMaster
 	const TABLE_NAME = 'regulations_master';
 	const CACHE_NAME = 'regulations_master';
 
+	/**
+	 * レギュレーションリストを取得
+	 * @return array レギュレーションタイプ[] => レギュレーション名
+	 */
 	public static function get_list()
 	{
 		try {

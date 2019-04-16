@@ -88,10 +88,12 @@
 		<?php endforeach; ?>
 	</div>
 	<div class="row">
+		<?php if ($record['comment']): ?>
 		<div class="col s12 m8">
 			<h4 class="teal-text">ひとこと</h4>
 			<p><?= nl2br($record['comment']); ?></p>
 		</div>
+		<?php endif; ?>
 		<?php if ($record['image']): ?>
 		<div class="col s12 m4">
 			<?= Asset::img($record['image'], ['class' => 'responsive-img']); ?>

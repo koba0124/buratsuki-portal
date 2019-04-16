@@ -3,6 +3,14 @@ class Model_Games
 {
 	const TABLE_NAME = 'games';
 
+	/**
+	 * ゲームデータ作成
+	 * @param  string  $game_id         ゲームID
+	 * @param  int     $players_number  プレイヤー人数
+	 * @param  int     $regulation_type レギュレーション番号
+	 * @param  boolean $is_moor         泥沼かどうか
+	 * @param  string  $owner           ゲーム作成者のusername
+	 */
 	public static function create($game_id, $players_number, $regulation_type, $is_moor, $owner)
 	{
 		$created_at = date('Y-m-d H:i:s');
@@ -18,6 +26,11 @@ class Model_Games
 		$query->execute();
 	}
 
+	/**
+	 * 戦績詳細用にゲームレコード取得
+	 * @param  string $game_id ゲームID
+	 * @return array           Gamesレコード
+	 */
 	public static function get_for_view($game_id)
 	{
 		$query = DB::select()
@@ -30,6 +43,10 @@ class Model_Games
 		return $records[0] ?? [];
 	}
 
+	/**
+	 * Gamesのレコード数を数える
+	 * @return int レコード数
+	 */
 	public static function count_list()
 	{
 		$query = DB::select(DB::expr('COUNT(*) AS count'))
@@ -37,6 +54,11 @@ class Model_Games
 		return $query->execute()->as_array()[0]['count'] ?? 0;
 	}
 
+	/**
+	 * 戦績一覧用のGamesリストを取得
+	 * @param  Pagination $pagination
+	 * @return array                  Gamesレコードの配列
+	 */
 	public static function get_list($pagination)
 	{
 		$query = DB::select()
@@ -49,6 +71,10 @@ class Model_Games
 		return $query->execute()->as_array();
 	}
 
+	/**
+	 * ゲームを削除
+	 * @param  string $game_id ゲームID
+	 */
 	public static function delete($game_id)
 	{
 		$query = DB::delete(self::TABLE_NAME)
