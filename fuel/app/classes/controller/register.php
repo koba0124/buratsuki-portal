@@ -1,6 +1,9 @@
 <?php
 class Controller_Register extends Controller_Template
 {
+	/**
+	 * ユーザ登録 /register GET
+	 */
 	public function get_index()
 	{
 		$this->template->title = 'ユーザ登録';
@@ -11,6 +14,9 @@ class Controller_Register extends Controller_Template
 		$this->template->content->error_fields = [];
 	}
 
+	/**
+	 * ユーザ登録 /register POST
+	 */
 	public function post_index()
 	{
 		$this->get_index();
@@ -52,6 +58,10 @@ class Controller_Register extends Controller_Template
 		Response::redirect('home');
 	}
 
+	/**
+	 * ユーザ登録 Validation
+	 * @return Validation
+	 */
 	private function create_val()
 	{
 		$val = Validation::forge();

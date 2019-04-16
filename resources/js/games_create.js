@@ -1,8 +1,18 @@
+import Http from './services/http.js'
+
 document.addEventListener('DOMContentLoaded', function() {
-	let elems = document.querySelectorAll('select');
-	M.FormSelect.init(elems, {});
+	let selects = document.querySelectorAll('select');
+	M.FormSelect.init(selects, {});
 	changePlayersNumber();
 	document.getElementById('form_players_number').addEventListener('change', changePlayersNumber);
+
+	let http = new Http();
+	http.get('/users', {}, (response) => {
+		let elems = document.querySelectorAll('.autocomplete');
+		M.Autocomplete.init(elems, {data: response.data, limit: 3});
+	}, (error) => {
+		console.log(error);
+	});
 });
 
 let changePlayersNumber = () => {

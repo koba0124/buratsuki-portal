@@ -1,6 +1,9 @@
 <?php
 class Controller_Games extends Controller_Template
 {
+	/**
+	 * プレイヤー人数選択用
+	 */
 	const PLAYERS_NUMBER_LIST = [
 		null => '[未選択]',
 		1 => '1人',
@@ -11,6 +14,9 @@ class Controller_Games extends Controller_Template
 		6 => '6人',
 	];
 
+	/**
+	 * -1～4点の得点カテゴリ
+	 */
 	const BASIC_POINTS_LIST = [
 		'fields' => '畑',
 		'pastures' => '牧場',
@@ -21,6 +27,9 @@ class Controller_Games extends Controller_Template
 		'cattle' => '牛',
 	];
 
+	/**
+	 * それ以外の得点カテゴリ
+	 */
 	const ADVANCED_POINTS_LIST = [
 		'unused_spaces' => '未使用スペース',
 		'stable' => '柵に囲まれた厩',
@@ -49,6 +58,7 @@ class Controller_Games extends Controller_Template
 		$this->template->content->error_fields = [];
 		$this->template->content->players_number_list = self::PLAYERS_NUMBER_LIST;
 		$this->template->content->regulation_type_list = Model_RegulationsMaster::get_list();
+		$this->template->content->players_list = Model_Users::get_list(true);
 		Asset::js(['games_create.js'], [], 'add_js');
 	}
 
@@ -252,6 +262,9 @@ class Controller_Games extends Controller_Template
 		return $val;
 	}
 
+	/**
+	 * 戦績詳細 games/edit GET
+	 */
 	public function get_view($game_id)
 	{
 		$data = Model_Games::get_for_view($game_id);
@@ -276,6 +289,7 @@ class Controller_Games extends Controller_Template
 
 		Asset::js(['games_view.js'], [], 'add_js');
 
+		// 以下OGP用データの処理
 		$sort = array_column($score_data, 'rank');
 		array_multisort($sort, SORT_DESC, $score_data);
 		$this->template->ogp_image_large = array_reduce($score_data, function($c, $i) {
@@ -295,6 +309,10 @@ class Controller_Games extends Controller_Template
 		$this->template->description .= '1位は' . $score_rank_first['total_points'] . '点の' . ($score_rank_first['profile_fields']['screen_name'] ?? 'unknown') . '(' . $score_rank_first['player_order'] . '番手)でした。';
 	}
 
+	/**
+	 * 戦績詳細 games/edit POST
+	 * ゲームの削除、順位自動計算
+	 */
 	public function post_view($game_id)
 	{
 		$this->get_view($game_id);
@@ -335,6 +353,11 @@ class Controller_Games extends Controller_Template
 		}
 	}
 
+	/**
+	 * 順位を計算し、DBの値を更新
+	 * @param  string $game_id    ゲームID
+	 * @param  array  $score_data GamesScoresレコードの配列
+	 */
 	public static function calc_rank($game_id, $score_data)
 	{
 		$sort = array_column($score_data, 'total_points');
@@ -354,6 +377,9 @@ class Controller_Games extends Controller_Template
 		Model_GamesScores::set_rank($game_id, $rank_list);
 	}
 
+	/**
+	 * 戦績一覧 /games GET
+	 */
 	public function action_index()
 	{
 		$this->template->content = View::forge('games/index');

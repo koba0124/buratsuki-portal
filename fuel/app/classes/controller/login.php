@@ -1,6 +1,9 @@
 <?php
 class Controller_Login extends Controller_Template
 {
+	/**
+	 * ログイン /login GET
+	 */
 	public function get_index()
 	{
 		$this->template->title = 'ログイン';
@@ -10,6 +13,9 @@ class Controller_Login extends Controller_Template
 		$this->template->content = View::forge('login');
 	}
 
+	/**
+	 * ログイン /login POST
+	 */
 	public function post_index()
 	{
 		$this->get_index();
