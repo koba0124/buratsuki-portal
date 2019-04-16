@@ -10,6 +10,9 @@ class Controller_Index extends Controller_Template
 	public function action_about()
 	{
 		$this->template->title = '本サイトについて';
+		$this->template->breadcrumbs = [
+			'/about' => '本サイトについて',
+		];
 		$this->template->content = View::forge('about');
 	}
 
