@@ -7,6 +7,12 @@ class Controller_Index extends Controller_Template
 		$this->template->content = View::forge('index');
 	}
 
+	public function action_about()
+	{
+		$this->template->title = '本サイトについて';
+		$this->template->content = View::forge('about');
+	}
+
 	public function action_404()
 	{
 		$this->response_status = 404;
