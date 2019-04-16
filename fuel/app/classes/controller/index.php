@@ -1,12 +1,18 @@
 <?php
 class Controller_Index extends Controller_Template
 {
+	/**
+	 * トップページ / GET
+	 */
 	public function action_index()
 	{
 		$this->template->title = 'TOP';
 		$this->template->content = View::forge('index');
 	}
 
+	/**
+	 * 本サイトについて /about GET
+	 */
 	public function action_about()
 	{
 		$this->template->title = '本サイトについて';
@@ -16,6 +22,9 @@ class Controller_Index extends Controller_Template
 		$this->template->content = View::forge('about');
 	}
 
+	/**
+	 * 404ページ GET
+	 */
 	public function action_404()
 	{
 		$this->response_status = 404;

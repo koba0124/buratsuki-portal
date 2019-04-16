@@ -1,6 +1,7 @@
 <?php
 class Controller_Home extends Controller_Template
 {
+	// 全ページ要認証
 	public function before()
 	{
 		parent::before();
@@ -9,6 +10,9 @@ class Controller_Home extends Controller_Template
 		}
 	}
 
+	/**
+	 * マイページ /home GET
+	 */
 	public function action_index()
 	{
 		$this->template->title = 'マイページ';
@@ -21,6 +25,9 @@ class Controller_Home extends Controller_Template
 		$this->template->content->games_list = Model_GamesScores::get_list_for_home($username);
 	}
 
+	/**
+	 * プロフィール編集 /home/edit_profile GET
+	 */
 	public function get_edit_profile()
 	{
 		$this->template->title = 'プロフィール編集';
@@ -36,6 +43,9 @@ class Controller_Home extends Controller_Template
 		$this->template->content->data = Model_Users::get_by_user_id($username);
 	}
 
+	/**
+	 * プロフィール編集 /home/edit_profile POST
+	 */
 	public function post_edit_profile()
 	{
 		$this->get_edit_profile();
@@ -76,6 +86,39 @@ class Controller_Home extends Controller_Template
 		Response::redirect('/users/view/' . Auth::get_screen_name());
 	}
 
+	/**
+	 * プロフィール編集 Validation
+	 * @param  array $occupations        好きな職業card_idの配列
+	 * @param  array $minor_improvements 好きな小進歩card_idの配列
+	 * @return Validation
+	 */
+	private static function validation_edit_profile($occupations, $minor_improvements)
+	{
+		$val = Validation::forge();
+		$val->add_callable('ValidationRule');
+		$val->add('screen_name', '表示名')
+			->add_rule('required');
+		$val->add('twitter', 'Twitter')
+			->add_rule('valid_twitter');
+		$val->add('comments', 'ひとこと');
+		$val->add('occupations', '好きな職業')
+			->add_rule('array_unique');
+		foreach ($occupations as $key => $occupation) {
+			$val->add('occupations.' . $key, '好きな職業' . ($key + 1))
+				->add_rule('valid_occupation_id', $occupation);
+		}
+		$val->add('minor_improvements', '好きな小進歩')
+			->add_rule('array_unique');
+		foreach ($minor_improvements as $key => $minor_improvement) {
+			$val->add('minor_improvements.' . $key, '好きな小進歩' . ($key + 1))
+				->add_rule('valid_minor_improvement_id', $minor_improvement);
+		}
+		return $val;
+	}
+
+	/**
+	 * アイコン変更 /home/edit_icon GET
+	 */
 	public function get_edit_icon()
 	{
 		$this->template->title = 'アイコン変更';
@@ -91,6 +134,9 @@ class Controller_Home extends Controller_Template
 		$this->template->content->data = Model_Users::get_by_user_id($username);
 	}
 
+	/**
+	 * アイコン変更 /home/edit_icon POST
+	 */
 	public function post_edit_icon()
 	{
 		$this->get_edit_icon();
@@ -99,12 +145,12 @@ class Controller_Home extends Controller_Template
 			return;
 		}
 		$config = [
-			'path' => DOCROOT.'assets/img/upload/users/',
+			'path' => DOCROOT . 'assets/img/upload/users/',
 			'ext_whitelist' => ['jpg', 'jpeg', 'png', 'gif'],
 			'new_name' => Auth::get_screen_name(),
 			'auto_rename' => false,
 			'overwrite' => true,
-			'max_size' => 5 * 1024 * 1024,
+			'max_size' => 5 * 1024 * 1024, // 5MB
 			'create_path' => true,
 		];
 		Upload::process($config);
@@ -122,6 +168,9 @@ class Controller_Home extends Controller_Template
 		Response::redirect('/users/view/' . Auth::get_screen_name());
 	}
 
+	/**
+	 * パスワード変更 /home/change_password GET
+	 */
 	public function get_change_password()
 	{
 		$this->template->title = 'パスワード変更';
@@ -132,6 +181,9 @@ class Controller_Home extends Controller_Template
 		$this->template->content = View::forge('home/change_password');
 	}
 
+	/**
+	 * パスワード変更 /home/change_password POST
+	 */
 	public function post_change_password()
 	{
 		$this->get_change_password();
@@ -157,30 +209,10 @@ class Controller_Home extends Controller_Template
 		Response::redirect('home');
 	}
 
-	private static function validation_edit_profile($occupations, $minor_improvements)
-	{
-		$val = Validation::forge();
-		$val->add_callable('ValidationRule');
-		$val->add('screen_name', '表示名')
-			->add_rule('required');
-		$val->add('twitter', 'Twitter')
-			->add_rule('valid_twitter');
-		$val->add('comments', 'ひとこと');
-		$val->add('occupations', '好きな職業')
-			->add_rule('array_unique');
-		foreach ($occupations as $key => $occupation) {
-			$val->add('occupations.' . $key, '好きな職業' . ($key + 1))
-				->add_rule('valid_occupation_id', $occupation);
-		}
-		$val->add('minor_improvements', '好きな小進歩')
-			->add_rule('array_unique');
-		foreach ($minor_improvements as $key => $minor_improvement) {
-			$val->add('minor_improvements.' . $key, '好きな小進歩' . ($key + 1))
-				->add_rule('valid_minor_improvement_id', $minor_improvement);
-		}
-		return $val;
-	}
-
+	/**
+	 * パスワード変更 Vaidation
+	 * @return Validation
+	 */
 	private static function validation_change_password()
 	{
 		$val = Validation::forge();
