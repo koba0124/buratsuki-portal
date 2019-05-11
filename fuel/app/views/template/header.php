@@ -15,6 +15,7 @@
 	<li><?= Html::anchor('/games', '<i class="material-icons">star_rate</i>戦績'); ?></li>
 	<li><?= Html::anchor('/cards', '<i class="material-icons">find_in_page</i>カード'); ?></li>
 	<li><?= Html::anchor('/users', '<i class="material-icons">people</i>メンバー'); ?></li>
+	<li><?= Html::anchor('/statistics', '<i class="material-icons">folder</i>統計'); ?></li>
 	<li><div class="divider"></div></li>
 	<?php if (Auth::check()): ?>
 	<li><?= Html::anchor('/home', 'マイページ'); ?></li>
@@ -37,6 +38,7 @@
 				<li><?= Html::anchor('/games', '戦績'); ?></li>
 				<li><?= Html::anchor('/cards', 'カード'); ?></li>
 				<li><?= Html::anchor('/users', 'メンバー'); ?></li>
+				<li><?= Html::anchor('/statistics', '統計'); ?></li>
 				<?php if (Auth::check()): ?>
 				<li><?= Html::anchor('/home', 'マイページ'); ?></li>
 				<?php else: ?>

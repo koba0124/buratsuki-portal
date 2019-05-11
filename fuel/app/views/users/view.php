@@ -18,6 +18,17 @@
 				<dt class="teal-text">ひとこと</dt>
 				<dd><?= nl2br($user_data['comment']); ?></dd>
 				<?php endif; ?>
+				<dt class="teal-text">平均点</dt>
+				<dd>
+					<span>通常: <?= sprintf('%.2f', $score_average_data[0]) ?? '-'; ?>点</span>
+					<span style="margin-left: 1em;">泥沼: <?= sprintf('%.2f', $score_average_data[1]) ?? '-'; ?>点</span>
+				</dd>
+				<dt class="teal-text">平均順位</dt>
+				<dd>
+					<?php foreach ($rank_average_data as $key => $value): ?>
+					<span style="margin-right: 1em;"><?= $key; ?>グリ: <?= sprintf('%.2f', $value); ?>位</span>
+					<?php endforeach; ?>
+				</dd>
 			</dl>
 		</div>
 	</div>
