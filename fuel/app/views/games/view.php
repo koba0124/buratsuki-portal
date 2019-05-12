@@ -35,7 +35,7 @@
 			<tr>
 				<th>馬</th>
 				<?php foreach ($score_data as $order => $record): ?>
-				<td><?= $record['horse'] ?? '-'; ?></td>
+				<td><?= $record['horses'] ?? '-'; ?></td>
 				<?php endforeach; ?>
 			</tr>
 			<?php endif; ?>
