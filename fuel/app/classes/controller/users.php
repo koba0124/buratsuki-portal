@@ -53,5 +53,9 @@ class Controller_Users extends Controller_Template
 			'total_items' => $count,
 		]);
 		$this->template->content->games_list = Model_GamesScores::get_list_for_users($user_id, $pagination);
+
+		// 統計データ
+		$this->template->content->score_average_data = Model_GamesScores::get_score_average($user_id);
+		$this->template->content->rank_average_data = Model_GamesScores::get_rank_average($user_id);
 	}
 }

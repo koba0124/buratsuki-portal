@@ -6,9 +6,9 @@
 return array(
 	'default' => array(
 		'connection'  => array(
-			'dsn'        => 'mysql:host=localhost;dbname=buratsuki-portal',
+			'dsn'        => 'mysql:host=buratsuki-portal_mysql_1;dbname=buratsuki-portal',
 			'username'   => 'root',
-			'password'   => 'arthur',
+			'password'   => 'passw0rd',
 		),
 		'profiling'  => true,
 	),
