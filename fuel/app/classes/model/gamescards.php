@@ -43,10 +43,15 @@ class Model_GamesCards
 		$delete_query->execute();
 		$query = DB::insert(self::TABLE_NAME)
 					->columns(['game_id', 'player_order', 'card_id']);
+		$count = 0;
 		foreach (Model_CardsMaster::TYPES_LABEL as $field => $label) {
 			foreach ($cards_list[$field . 's'] as $card) {
+				$count++;
 				$query->values([$game_id, $player_order, $card]);
 			}
+		}
+		if ($count === 0) {
+			return;
 		}
 		$query->execute();
 	}
