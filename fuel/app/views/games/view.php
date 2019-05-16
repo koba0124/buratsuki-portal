@@ -35,7 +35,7 @@
 			<tr>
 				<th>馬</th>
 				<?php foreach ($score_data as $order => $record): ?>
-				<td><?= $record['horse'] ?? '-'; ?></td>
+				<td><?= $record['horses'] ?? '-'; ?></td>
 				<?php endforeach; ?>
 			</tr>
 			<?php endif; ?>
@@ -96,7 +96,7 @@
 		<?php endif; ?>
 		<?php if ($record['image']): ?>
 		<div class="col s12 m4">
-			<?= Asset::img($record['image'], ['class' => 'responsive-img']); ?>
+			<?= Asset::img($record['image'], ['class' => 'responsive-img materialboxed']); ?>
 		</div>
 		<?php endif; ?>
 	</div>

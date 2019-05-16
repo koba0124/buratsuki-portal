@@ -67,7 +67,7 @@
 	<h2 class="teal-text">画像</h2>
 	<div class="row">
 		<div class="col s12 m9 file-field input-field">
-			<p>jpg、png、gifファイル(5MB)が選択可能です。</p>
+			<p>jpg、png、gifファイル(10MB)が選択可能です。</p>
 			<div class="btn teal">
 				<span>画像</span>
 				<?= Form::file('image'); ?>

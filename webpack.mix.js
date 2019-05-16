@@ -18,5 +18,7 @@ mix.js('resources/js/materialize.js', 'public/assets/js')
 	.js('resources/js/games_create.js', 'public/assets/js')
 	.js('resources/js/games_edit.js', 'public/assets/js')
 	.js('resources/js/games_view.js', 'public/assets/js')
+	.js('resources/js/statistics_cardsuses.js', 'public/assets/js')
+	.js('resources/js/statistics_score.js', 'public/assets/js')
 	.sass('resources/sass/app.scss', 'public/assets/css')
 	.sass('resources/sass/app_async.scss', 'public/assets/css');

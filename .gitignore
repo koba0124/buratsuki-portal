@@ -38,3 +38,7 @@ desktop.ini
 /public/assets/css/*.css
 /mix-manifest.json
 /public/assets/img/upload/*/*
+
+# docker
+/docker/mysql/*
+/docker/nginx/server.conf

@@ -221,4 +221,52 @@ class Model_GamesScores
 		}
 		return $list;
 	}
+
+	public static function get_score_average($username)
+	{
+		$query = DB::select('is_moor', DB::expr('AVG(`total_points`) AS average'))
+					->from(self::TABLE_NAME)
+					->join(Model_Games::TABLE_NAME, 'inner')
+					->on(self::TABLE_NAME . '.game_id', '=', Model_Games::TABLE_NAME . '.game_id')
+					->where('username', '=', $username)
+					->and_where('players_number', '>=', 2)
+					->group_by('is_moor');
+		$result = $query->execute()->as_array();
+		return array_column($result, 'average', 'is_moor');
+	}
+
+	public static function get_rank_average($username)
+	{
+		$query = DB::select('players_number', DB::expr('AVG(`rank`) AS average'))
+					->from(self::TABLE_NAME)
+					->join(Model_Games::TABLE_NAME, 'inner')
+					->on(self::TABLE_NAME . '.game_id', '=', Model_Games::TABLE_NAME . '.game_id')
+					->where('username', '=', $username)
+					->and_where('players_number', '>=', 2)
+					->group_by('players_number');
+		$result = $query->execute()->as_array();
+		if ($result === []) {
+			return [];
+		}
+		return array_column($result, 'average', 'players_number');
+	}
+
+	public static function get_score_ranking($regulation_type, $is_moor)
+	{
+		$query = DB::select(self::TABLE_NAME . '.game_id', 'total_points', self::TABLE_NAME . '.username', 'profile_fields')
+					->from(self::TABLE_NAME)
+					->join(Model_Games::TABLE_NAME, 'inner')
+					->on(self::TABLE_NAME . '.game_id', '=', Model_Games::TABLE_NAME . '.game_id')
+					->join(Model_Users::TABLE_NAME, 'inner')
+					->on(self::TABLE_NAME . '.username', '=', Model_Users::TABLE_NAME . '.username')
+					->where('regulation_type', $regulation_type)
+					->and_where('is_moor', $is_moor)
+					->and_where('players_number', '>=', 2)
+					->order_by('total_points', 'desc')
+					->limit(10);
+		$result = $query->execute()->as_array();
+		$result = Model_GamesCards::append_rank($result, 'total_points');
+		$result = Model_Users::append_profile_fields($result);
+		return $result;
+	}
 }

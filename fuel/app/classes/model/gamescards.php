@@ -43,10 +43,15 @@ class Model_GamesCards
 		$delete_query->execute();
 		$query = DB::insert(self::TABLE_NAME)
 					->columns(['game_id', 'player_order', 'card_id']);
+		$count = 0;
 		foreach (Model_CardsMaster::TYPES_LABEL as $field => $label) {
 			foreach ($cards_list[$field . 's'] as $card) {
+				$count++;
 				$query->values([$game_id, $player_order, $card]);
 			}
+		}
+		if ($count === 0) {
+			return;
 		}
 		$query->execute();
 	}
@@ -133,6 +138,112 @@ class Model_GamesCards
 					->order_by(Model_Games::TABLE_NAME . '.created_at', 'desc');
 		$records = $query->execute()->as_array();
 		$records = Model_Users::append_profile_fields($records);
+		return $records;
+	}
+
+	public static function get_uses_ranking($card_type, $regulation_type)
+	{
+		$columns = [
+			DB::expr('COUNT(*) AS count'),
+			self::TABLE_NAME . '.card_id',
+			'card_id_display',
+			'japanese_name',
+		];
+		$query = DB::select_array($columns)
+					->from(self::TABLE_NAME)
+					->join(Model_Games::TABLE_NAME)
+					->on(self::TABLE_NAME . '.game_id', '=', Model_Games::TABLE_NAME . '.game_id')
+					->join(Model_CardsMaster::TABLE_NAME)
+					->on(self::TABLE_NAME . '.card_id', '=', Model_CardsMaster::TABLE_NAME . '.card_id')
+					->where('regulation_type', '=', $regulation_type)
+					->and_where('type', '=', $card_type)
+					->group_by(self::TABLE_NAME . '.card_id')
+					->order_by('count', 'desc')
+					->order_by('card_id', 'asc')
+					->limit(50);
+		$result = $query->execute()->as_array();
+		$result = self::append_rank($result, 'count');
+		return $result;
+	}
+
+	public static function get_wins_ranking($card_type, $regulation_type)
+	{
+		$columns = [
+			DB::expr('COUNT(*) AS count'),
+			Model_CardsMaster::TABLE_NAME . '.card_id',
+			'card_id_display',
+			'japanese_name',
+		];
+		$query = DB::select_array($columns)
+					->from(self::TABLE_NAME)
+					->join(Model_GamesScores::TABLE_NAME)
+					->on(self::TABLE_NAME . '.game_id', '=', Model_GamesScores::TABLE_NAME . '.game_id')
+					->and_on(self::TABLE_NAME . '.player_order', '=', Model_GamesScores::TABLE_NAME . '.player_order')
+					->join(Model_Games::TABLE_NAME)
+					->on(self::TABLE_NAME . '.game_id', '=', Model_Games::TABLE_NAME . '.game_id')
+					->join(Model_CardsMaster::TABLE_NAME)
+					->on(self::TABLE_NAME . '.card_id', '=', Model_CardsMaster::TABLE_NAME . '.card_id')
+					->where('regulation_type', '=', $regulation_type)
+					->and_where('players_number', '>=', 2)
+					->and_where('type', '=', $card_type)
+					->and_where('rank', '=', 1)
+					->group_by(self::TABLE_NAME . '.card_id')
+					->order_by('count', 'desc')
+					->order_by('card_id', 'asc')
+					->limit(50);
+		$result = $query->execute()->as_array();
+
+		$result = self::append_rate_of_wins($result, $regulation_type);
+		$result = self::append_rank($result, 'count');
+		return $result;
+	}
+
+	private static function append_rate_of_wins($records, $regulation_type)
+	{
+		$card_id_list = array_column($records, 'card_id');
+		$query = DB::select(Model_CardsMaster::TABLE_NAME . '.card_id', DB::expr('COUNT(*) AS count'))
+					->from(self::TABLE_NAME)
+					->join(Model_Games::TABLE_NAME)
+					->on(self::TABLE_NAME . '.game_id', '=', Model_Games::TABLE_NAME . '.game_id')
+					->join(Model_CardsMaster::TABLE_NAME)
+					->on(self::TABLE_NAME . '.card_id', '=', Model_CardsMaster::TABLE_NAME . '.card_id')
+					->where('regulation_type', '=', $regulation_type)
+					->and_where('players_number', '>=', 2)
+					->and_where(Model_CardsMaster::TABLE_NAME . '.card_id', 'in', $card_id_list)
+					->group_by(Model_CardsMaster::TABLE_NAME . '.card_id');
+		$result = $query->execute()->as_array();
+
+		$number_of_uses_list = array_column($result, 'count', 'card_id');
+		$card_id_list2 = array_column($result, 'card_id');
+
+		foreach ($records as &$record) {
+			$number_of_uses = $record['count'];
+			$number_of_wins = $number_of_uses_list[$record['card_id']];
+			if ($number_of_wins == 0) {
+				continue;
+			}
+			$record['rate'] = sprintf('%.2f', $number_of_uses / $number_of_wins * 100);
+		}
+		unset($record);
+		return $records;
+	}
+
+	public static function append_rank($records, $key)
+	{
+		$tmp = -99999;
+		$rank = 0;
+		$rank_reserve = 1;
+		foreach ($records as &$record) {
+			if ($record[$key] == $tmp) {
+				$rank_reserve++;
+			} else {
+				$rank += $rank_reserve;
+				$rank_reserve = 1;
+				$tmp = $record[$key];
+			}
+			$record['rank'] = $rank;
+		}
+		unset($record);
 		return $records;
 	}
 }
