@@ -1,4 +1,6 @@
 <?php
+use Intervention\Image\ImageManager;
+
 class Controller_Games extends Controller_Template
 {
 	/**
@@ -188,7 +190,7 @@ class Controller_Games extends Controller_Template
 				'new_name' => $game_id.'_'.$player_order,
 				'auto_rename' => false,
 				'overwrite' => true,
-				'max_size' => 5 * 1024 * 1024,
+				'max_size' => 10 * 1024 * 1024,
 				'create_path' => true,
 			];
 			Upload::process($config);
@@ -199,6 +201,7 @@ class Controller_Games extends Controller_Template
 			}
 			Upload::save();
 			$image = 'upload/games/' . Upload::get_files('image')['saved_as'];
+			self::resize_image(DOCROOT . 'assets/img/' . $image);
 		}
 
 		Model_GamesScores::update($game_id, $player_order, $image);
@@ -260,6 +263,21 @@ class Controller_Games extends Controller_Template
 			}
 		}
 		return $val;
+	}
+
+	private static function resize_image($path)
+	{
+		$manager = new ImageManager(['driver' => 'imagick']);
+		$width = 1920;
+		$image = $manager->make($path);
+		if ($image->width() <= $width) {
+			return;
+		}
+		$image->orientate();
+		$image->resize($width, null, function($constraint) {
+			$constraint->aspectRatio();
+		});
+		$image->save($path);
 	}
 
 	/**
