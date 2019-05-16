@@ -371,6 +371,7 @@ class Controller_Games extends Controller_Template
 			} else {
 				$rank += $rank_reserve;
 				$tmp = $record['total_points'];
+				$rank_reserve = 1;
 			}
 			$rank_list[$record['player_order']] = $rank;
 		}
