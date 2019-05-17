@@ -20,8 +20,12 @@
 				<?php endif; ?>
 				<dt class="teal-text">平均点</dt>
 				<dd>
-					<span>通常: <?= sprintf('%.2f', $score_average_data[0]) ?? '-'; ?>点</span>
-					<span style="margin-left: 1em;">泥沼: <?= sprintf('%.2f', $score_average_data[1]) ?? '-'; ?>点</span>
+					<?php if (isset($score_average_data[0])): ?>
+					<span style="margin-right: 1em;">通常: <?= sprintf('%.2f', $score_average_data[0]); ?>点</span>
+					<?php endif; ?>
+					<?php if (isset($score_average_data[1])): ?>
+					<span>泥沼: <?= sprintf('%.2f', $score_average_data[1]); ?>点</span>
+					<?php endif; ?>
 				</dd>
 				<dt class="teal-text">平均順位</dt>
 				<dd>
