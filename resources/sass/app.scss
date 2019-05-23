@@ -3,27 +3,44 @@
 $occupation-color: color("yellow", "darken-2");
 $minor-improvement-color: color("orange", "darken-2");
 $major-improvement-color: color("pink", "darken-2");
+$WB-color: color("indigo", "darken-2");
+$X-color: color("light-green", "darken-2");
+$LF-color: color("brown", "base");
 
 .occupation-bg {
 	background: $occupation-color !important;
 }
-
 .minor_improvement-bg {
 	background: $minor-improvement-color !important;
 }
-
 .major_improvement-bg {
 	background: $major-improvement-color !important;
+}
+.WB-bg {
+	background: $WB-color !important;
+}
+.X-bg {
+	background: $X-color !important;
+}
+.LF-bg {
+	background: $LF-color !important;
 }
 
 .occupation-text {
 	color: $occupation-color !important;
 }
-
 .minor_improvement-text {
 	color: $minor-improvement-color !important;
 }
-
 .major_improvement-text {
 	color: $major-improvement-color !important;
+}
+.WB-text {
+	color: $WB-color !important;
+}
+.X-text {
+	color: $X-color !important;
+}
+.LF-text {
+	color: $LF-color !important;
 }

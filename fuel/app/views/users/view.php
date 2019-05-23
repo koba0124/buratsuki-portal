@@ -54,7 +54,7 @@
 				<?php foreach ($minor_improvements as $card): ?>
 				<a href="<?= Uri::create('cards/view/:id', ['id' => $card['card_id']]); ?>" class="collection-item">
 					<?= $card['japanese_name']; ?>
-					<span class="new minor_improvement-bg darken-2 badge" data-badge-caption=""><?= $card['card_id_display']; ?></span>
+					<span class="new <?= Model_CardsMaster::get_type($card); ?>-bg darken-2 badge" data-badge-caption=""><?= $card['card_id_display']; ?></span>
 				</a>
 				<?php endforeach; ?>
 			</div>
