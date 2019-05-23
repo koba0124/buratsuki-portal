@@ -80,7 +80,7 @@
 				<?php foreach ($cards_data[$order][$type . 's'] ?? [] as $card): ?>
 				<a href="#modal_card_<?= $order; ?>_<?= $card['card_id']; ?>" class="modal-trigger collection-item">
 					<?= $card['japanese_name']; ?>
-					<span class="new <?= $type ?>-bg darken-2 badge" data-badge-caption=""><?= $card['card_id_display']; ?></span>
+					<span class="new <?= Model_CardsMaster::get_type($card); ?>-bg darken-2 badge" data-badge-caption=""><?= $card['card_id_display']; ?></span>
 				</a>
 				<?php endforeach; ?>
 			</div>
@@ -147,9 +147,9 @@
 <?php foreach ($type_cards as $card): ?>
 <div id="modal_card_<?= $order; ?>_<?= $card['card_id'] ?>" class="modal">
 	<div class="modal-content">
-		<h4 class="<?= $card['type']; ?>-text">
+		<h4 class="<?= Model_CardsMaster::get_type($card); ?>-text">
 			<?= $card['japanese_name']; ?>
-			<span class="new <?= $card['type']; ?>-bg badge" data-badge-caption=""><?= $card['card_id_display']; ?></span>
+			<span class="new <?= Model_CardsMaster::get_type($card); ?>-bg badge" data-badge-caption=""><?= $card['card_id_display']; ?></span>
 		</h4>
 		<dl>
 			<dt class="teal-text">デッキ</dt>

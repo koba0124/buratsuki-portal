@@ -1,7 +1,7 @@
 <div class="container">
-	<h1 class="<?= $card['type']; ?>-text">
+	<h1 class="<?= Model_CardsMaster::get_type($card); ?>-text">
 		<?= $card['japanese_name']; ?>
-		<span class="new <?= $card['type']; ?>-bg darken-2 badge" data-badge-caption=""><?= $card['card_id_display']; ?></span>
+		<span class="new <?= Model_CardsMaster::get_type($card); ?>-bg darken-2 badge" data-badge-caption=""><?= $card['card_id_display']; ?></span>
 	</h1>
 	<dl>
 		<dt class="teal-text">デッキ</dt>

@@ -60,7 +60,7 @@
 					<tr>
 						<td><?= $record['rank']; ?>位</td>
 						<td>
-							<span class="new badge <?= $type; ?>-bg" data-badge-caption="<?= $record['card_id_display']; ?>"></span> 
+							<span class="new badge <?= Model_CardsMaster::get_type($record); ?>-bg" data-badge-caption="<?= $record['card_id_display']; ?>"></span> 
 							<?= $record['japanese_name']; ?>
 						</td>
 						<td><?= Html::anchor('/cards/view/' . $record['card_id'], '<i class="material-icons">link</i>'); ?></td>

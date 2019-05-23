@@ -41,5 +41,6 @@ class Controller_Statistics extends Controller_Template
 
 		$this->template->content->normal_ranking = Model_GamesScores::get_score_ranking(2, 0);
 		$this->template->content->moor_ranking = Model_GamesScores::get_score_ranking(2, 1);
+		$this->template->content->revised_ranking = Model_GamesScores::get_score_ranking(4, 0);
 	}
 }
