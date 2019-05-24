@@ -34,6 +34,7 @@
 					<?php endforeach; ?>
 				</dd>
 			</dl>
+			<?= Html::anchor('/statistics/user/' . $user_data['username'], '統計詳細を見る'); ?>
 		</div>
 	</div>
 	<div class="row">
