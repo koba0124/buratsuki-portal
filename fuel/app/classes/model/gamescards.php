@@ -214,7 +214,6 @@ class Model_GamesCards
 		$result = $query->execute()->as_array();
 
 		$number_of_uses_list = array_column($result, 'count', 'card_id');
-		$card_id_list2 = array_column($result, 'card_id');
 
 		foreach ($records as &$record) {
 			$number_of_uses = $record['count'];
@@ -242,6 +241,68 @@ class Model_GamesCards
 				$tmp = $record[$key];
 			}
 			$record['rank'] = $rank;
+		}
+		unset($record);
+		return $records;
+	}
+
+	public static function get_uses_ranking_by_user($username, $card_type, $regulation_type)
+	{
+		$columns = [
+			DB::expr('COUNT(*) AS count'),
+			self::TABLE_NAME . '.card_id',
+			'card_id_display',
+			'japanese_name',
+		];
+		$query = DB::select_array($columns)
+					->from(self::TABLE_NAME)
+					->join(Model_GamesScores::TABLE_NAME)
+					->on(self::TABLE_NAME . '.game_id', '=', Model_GamesScores::TABLE_NAME . '.game_id')
+					->and_on(self::TABLE_NAME . '.player_order', '=', Model_GamesScores::TABLE_NAME . '.player_order')
+					->join(Model_Games::TABLE_NAME)
+					->on(self::TABLE_NAME . '.game_id', '=', Model_Games::TABLE_NAME . '.game_id')
+					->join(Model_CardsMaster::TABLE_NAME)
+					->on(self::TABLE_NAME . '.card_id', '=', Model_CardsMaster::TABLE_NAME . '.card_id')
+					->where('regulation_type', '=', $regulation_type)
+					->and_where('type', '=', $card_type)
+					->and_where('username', '=', $username)
+					->group_by(self::TABLE_NAME . '.card_id')
+					->order_by('count', 'desc')
+					->order_by('card_id', 'asc')
+					->limit(20);
+		$result = $query->execute()->as_array();
+		$result = self::append_rank($result, 'count');
+		$result = self::append_rate_of_uses($result, $regulation_type);
+		return $result;
+	}
+
+	private static function append_rate_of_uses($records, $regulation_type)
+	{
+		$card_id_list = array_column($records, 'card_id');
+		if ($card_id_list === []) {
+			return $records;
+		}
+		$query = DB::select(Model_CardsMaster::TABLE_NAME . '.card_id', DB::expr('COUNT(*) AS count'))
+					->from(self::TABLE_NAME)
+					->join(Model_Games::TABLE_NAME)
+					->on(self::TABLE_NAME . '.game_id', '=', Model_Games::TABLE_NAME . '.game_id')
+					->join(Model_CardsMaster::TABLE_NAME)
+					->on(self::TABLE_NAME . '.card_id', '=', Model_CardsMaster::TABLE_NAME . '.card_id')
+					->where('regulation_type', '=', $regulation_type)
+					->and_where('players_number', '>=', 2)
+					->and_where(Model_CardsMaster::TABLE_NAME . '.card_id', 'in', $card_id_list)
+					->group_by(Model_CardsMaster::TABLE_NAME . '.card_id');
+		$result = $query->execute()->as_array();
+
+		$number_of_all_list = array_column($result, 'count', 'card_id');
+
+		foreach ($records as &$record) {
+			$number_of_mine = $record['count'];
+			$number_of_all = $number_of_all_list[$record['card_id']];
+			if ($number_of_all == 0) {
+				continue;
+			}
+			$record['rate'] = sprintf('%.2f', $number_of_mine / $number_of_all * 100);
 		}
 		unset($record);
 		return $records;
