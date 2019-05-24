@@ -64,6 +64,9 @@ class Controller_Statistics extends Controller_Template
 
 		$this->template->content->transition_normal = Model_GamesScores::get_transition($username, 0);
 		$this->template->content->distribution_normal = Model_GamesScores::get_distribution($username, 0);
-		$this->template->content->distribution_moor = Model_GamesScores::get_distribution($username, 1);
+		$this->template->content->uses_rankings = [
+			'occupation' => Model_GamesCards::get_uses_ranking_by_user($username, 'occupation', 2),
+			'minor_improvement' => Model_GamesCards::get_uses_ranking_by_user($username, 'minor_improvement', 2),
+		];
 	}
 }
