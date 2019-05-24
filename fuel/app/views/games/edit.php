@@ -84,7 +84,7 @@
 	</div>
 	<h2 class="teal-text">カード</h2>
 	<p>
-		カード番号を半角英数字で入力してください。リバイズドの大きい進歩は、後ろに"_"をつけてください。
+		カード番号を半角英数字で入力してください。
 	</p>
 	<?php foreach ($cards_type_list as $field => $label): ?>
 	<div class="row" id="<?= $field; ?>s_box">

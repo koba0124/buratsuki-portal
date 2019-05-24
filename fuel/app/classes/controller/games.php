@@ -168,9 +168,21 @@ class Controller_Games extends Controller_Template
 		$cards_list = [];
 		foreach ($this->template->content->cards_type_list as $field => $label) {
 			$cards = Input::post($field . 's', []);
+			// 前後の空白を削除
 			$cards = array_map('trim', $cards);
 			$cards_list[$field . 's'] = array_values(array_filter($cards, 'strlen'));
 		}
+
+		// Revisedの場合、大進歩番号を置き換え
+		$regulation_type = $this->template->content->data['regulation_type'];
+		if (3 <= $regulation_type and $regulation_type <= 5) {
+			foreach ($cards_list['major_improvements'] as &$card_id) {
+				if (! preg_match('/_/', $card_id)) {
+					$card_id .= '_';
+				}
+			}
+		}
+
 		$this->template->content->cards_list = $cards_list;
 
 		$val = self::validation_edit($this->template->content->data, $cards_list);
