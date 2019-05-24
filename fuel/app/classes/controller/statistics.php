@@ -62,7 +62,8 @@ class Controller_Statistics extends Controller_Template
 			'/statistics/user/' . $username => $this->template->title,
 		];
 
-		$transition_normal = Model_GamesScores::get_transition($username, 0);
-		$this->template->content->transition_normal = $transition_normal;
+		$this->template->content->transition_normal = Model_GamesScores::get_transition($username, 0);
+		$this->template->content->distribution_normal = Model_GamesScores::get_distribution($username, 0);
+		$this->template->content->distribution_moor = Model_GamesScores::get_distribution($username, 1);
 	}
 }

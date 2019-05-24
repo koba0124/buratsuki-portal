@@ -286,4 +286,52 @@ class Model_GamesScores
 		}
 		return $result;
 	}
+
+	public static function get_distribution($username, $is_moor)
+	{
+		$query = DB::select('total_points')
+					->from(self::TABLE_NAME)
+					->join(Model_Games::TABLE_NAME, 'inner')
+					->on(self::TABLE_NAME . '.game_id', '=', Model_Games::TABLE_NAME . '.game_id')
+					->where('username', '=', $username)
+					->and_where('players_number', '>=', 2)
+					->and_where('is_moor', '=', $is_moor);
+		$result = $query->execute()->as_array();
+		$counts = [
+			'-29' => 0,
+			'30-34' => 0,
+			'35-39' => 0,
+			'40-44' => 0,
+			'45-49' => 0,
+			'50-54' => 0,
+			'55-59' => 0,
+			'60-64' => 0,
+			'65-69' => 0,
+			'70-' => 0,
+		];
+		foreach ($result as $record) {
+			if ($record['total_points'] < 30) {
+				$counts['-29']++;
+			} elseif ($record['total_points'] < 35) {
+				$counts['30-34']++;
+			} elseif ($record['total_points'] < 40) {
+				$counts['35-39']++;
+			} elseif ($record['total_points'] < 45) {
+				$counts['40-44']++;
+			} elseif ($record['total_points'] < 50) {
+				$counts['45-49']++;
+			} elseif ($record['total_points'] < 55) {
+				$counts['50-54']++;
+			} elseif ($record['total_points'] < 60) {
+				$counts['55-59']++;
+			} elseif ($record['total_points'] < 65) {
+				$counts['60-64']++;
+			} elseif ($record['total_points'] < 70) {
+				$counts['65-69']++;
+			} else {
+				$counts['70-']++;
+			}
+		}
+		return $counts;
+	}
 }
