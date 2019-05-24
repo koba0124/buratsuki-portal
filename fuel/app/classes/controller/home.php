@@ -57,8 +57,10 @@ class Controller_Home extends Controller_Template
 
 		// 空要素を詰める
 		$occupations = Input::post('occupations', []);
+		$occupations = array_map('trim', $occupations);
 		$occupations = array_values(array_filter($occupations, 'strlen'));
 		$minor_improvements = Input::post('minor_improvements', []);
+		$minor_improvements = array_map('trim', $minor_improvements);
 		$minor_improvements = array_values(array_filter($minor_improvements, 'strlen'));
 		$this->template->content->occupations = $occupations;
 		$this->template->content->minor_improvements = $minor_improvements;
