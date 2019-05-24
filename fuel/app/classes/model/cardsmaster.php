@@ -138,4 +138,18 @@ class Model_CardsMaster
 		}
 		return $record;
 	}
+
+	public static function get_type($card)
+	{
+		switch ($card['deck']) {
+			case 'WB':
+				return 'WB';
+			case 'X':
+				return 'X';
+			case 'LF':
+				return 'LF';
+			default:
+				return $card['type'];
+		}
+	}
 }

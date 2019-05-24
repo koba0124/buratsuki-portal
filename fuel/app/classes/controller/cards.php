@@ -96,7 +96,7 @@ class Controller_Cards extends Controller_Template
 
 		$this->template->content = View::forge('cards/view');
 		$this->template->content->card = $card;
-		$this->template->title = '[' . $card['card_id_display'] . ']' . $card['japanese_name'];
+		$this->template->title = '[' . $card['card_id_display'] . '] ' . $card['japanese_name'];
 		$this->template->breadcrumbs = [
 			'/cards' => 'カード',
 			'/cards/view/'.$card_id => $this->template->title,

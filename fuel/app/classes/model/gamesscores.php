@@ -269,4 +269,21 @@ class Model_GamesScores
 		$result = Model_Users::append_profile_fields($result);
 		return $result;
 	}
+
+	public static function get_transition($username, $is_moor)
+	{
+		$query = DB::select(DB::expr('AVG(`total_points`) AS average'), DB::expr("DATE_FORMAT(`created_at`, '%Y-%m') as month"))
+					->from(self::TABLE_NAME)
+					->join(Model_Games::TABLE_NAME, 'inner')
+					->on(self::TABLE_NAME . '.game_id', '=', Model_Games::TABLE_NAME . '.game_id')
+					->where('username', '=', $username)
+					->and_where('players_number', '>=', 2)
+					->and_where('is_moor', '=', $is_moor)
+					->group_by('month');
+		$result = $query->execute()->as_array();
+		foreach ($result as &$record) {
+			$record['average'] = (float) $record['average'];
+		}
+		return $result;
+	}
 }

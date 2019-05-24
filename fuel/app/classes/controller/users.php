@@ -31,7 +31,7 @@ class Controller_Users extends Controller_Template
 		$this->template->title = '['.$user_id.'] '.$user_data['screen_name'];
 		$this->template->breadcrumbs = [
 			'/users' => 'メンバー',
-			'/members/view/'.$user_id => $this->template->title,
+			'/users/view/'.$user_id => $this->template->title,
 		];
 
 		// OGP

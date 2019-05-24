@@ -41,5 +41,28 @@ class Controller_Statistics extends Controller_Template
 
 		$this->template->content->normal_ranking = Model_GamesScores::get_score_ranking(2, 0);
 		$this->template->content->moor_ranking = Model_GamesScores::get_score_ranking(2, 1);
+		$this->template->content->revised_ranking = Model_GamesScores::get_score_ranking(4, 0);
+	}
+
+	public function action_user($username)
+	{
+		$this->template->content = View::forge('statistics/user');
+		Asset::js(['https://cdn.jsdelivr.net/npm/chart.js@2.8.0', 'statistics_user.js'], [], 'add_js');
+
+		$user_data = Model_Users::get_by_user_id($username);
+		// ユーザが存在しないとき
+		if (! $user_data) {
+			throw new HttpNotFoundException;
+		}
+		$this->template->content->user_data = $user_data;
+
+		$this->template->title = '['.$username.'] '.$user_data['screen_name'];
+		$this->template->breadcrumbs = [
+			'/statistics' => '統計',
+			'/statistics/user/' . $username => $this->template->title,
+		];
+
+		$transition_normal = Model_GamesScores::get_transition($username, 0);
+		$this->template->content->transition_normal = $transition_normal;
 	}
 }
