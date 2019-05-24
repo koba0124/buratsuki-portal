@@ -168,6 +168,7 @@ class Controller_Games extends Controller_Template
 		$cards_list = [];
 		foreach ($this->template->content->cards_type_list as $field => $label) {
 			$cards = Input::post($field . 's', []);
+			$cards = array_map('trim', $cards);
 			$cards_list[$field . 's'] = array_values(array_filter($cards, 'strlen'));
 		}
 		$this->template->content->cards_list = $cards_list;
