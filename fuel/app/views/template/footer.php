@@ -23,6 +23,7 @@
 	<div class="footer-copyright">
 		<div class="container">
 			&copy; 2018-2019 ぶらつき学生連盟
+			<span class="grey-text text-lighten-4 right">v<?= Config::get('version'); ?></span>
 		</div>
 	</div>
 </footer>
