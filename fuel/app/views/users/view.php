@@ -34,7 +34,7 @@
 					<?php endforeach; ?>
 				</dd>
 			</dl>
-			<?= Html::anchor('/statistics/user/' . $user_data['username'], '統計詳細を見る'); ?>
+			<?= Html::anchor('/statistics/user/' . $user_data['username'], '統計詳細を見る >>'); ?>
 		</div>
 	</div>
 	<div class="row">
@@ -64,7 +64,7 @@
 	<?php if ($user_data['username'] === Auth::get_screen_name()): ?>
 	<p class="right-align"><?= Html::anchor('/home/edit_profile', '編集する'); ?></p>
 	<?php endif; ?>
-	<h2 class="teal-text">参加したゲーム</h2>
+	<h2 class="teal-text" id="games">参加したゲーム</h2>
 	<div class="collection">
 		<?php foreach ($games_list as $record): ?>
 		<a class="collection-item" href="<?= Uri::create('games/view/:game_id', ['game_id' => $record['game_id']]); ?>">

@@ -21,6 +21,7 @@ class Controller_Users extends Controller_Template
 	public function action_view($user_id)
 	{
 		$this->template->content = View::forge('users/view');
+		Asset::js(['users_view.js'], [], 'add_js');
 
 		$user_data = Model_Users::get_by_user_id($user_id);
 		// ユーザが存在しないとき
