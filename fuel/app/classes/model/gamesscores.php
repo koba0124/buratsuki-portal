@@ -334,4 +334,46 @@ class Model_GamesScores
 		}
 		return $counts;
 	}
+
+	public static function get_score_average_by_order() {
+		$query = DB::select('players_number', 'player_order', DB::expr('AVG(`total_points`) AS average'))
+					->from(self::TABLE_NAME)
+					->join(Model_Games::TABLE_NAME, 'inner')
+					->on(self::TABLE_NAME . '.game_id', '=', Model_Games::TABLE_NAME . '.game_id')
+					->where('players_number', '>=', 2)
+					->group_by('players_number')
+					->group_by('player_order')
+					->order_by('players_number', 'asc')
+					->order_by('player_order', 'asc');
+		$result = $query->execute()->as_array();
+		if ($result === []) {
+			return [];
+		}
+		$data = [];
+		foreach ($result as $record) {
+			$data[$record['players_number']][$record['player_order']] = $record['average'];
+		}
+		return $data;
+	}
+
+	public static function get_rank_average_by_order() {
+		$query = DB::select('players_number', 'player_order', DB::expr('AVG(`rank`) AS average'))
+					->from(self::TABLE_NAME)
+					->join(Model_Games::TABLE_NAME, 'inner')
+					->on(self::TABLE_NAME . '.game_id', '=', Model_Games::TABLE_NAME . '.game_id')
+					->where('players_number', '>=', 2)
+					->group_by('players_number')
+					->group_by('player_order')
+					->order_by('players_number', 'asc')
+					->order_by('player_order', 'asc');
+		$result = $query->execute()->as_array();
+		if ($result === []) {
+			return [];
+		}
+		$data = [];
+		foreach ($result as $record) {
+			$data[$record['players_number']][$record['player_order']] = $record['average'];
+		}
+		return $data;
+	}
 }

@@ -175,7 +175,7 @@ class Controller_Games extends Controller_Template
 
 		// Revisedの場合、大進歩番号を置き換え
 		$regulation_type = $this->template->content->data['regulation_type'];
-		if (3 <= $regulation_type and $regulation_type <= 5) {
+		if ($regulation_type == 3 or $regulation_type == 4) {
 			foreach ($cards_list['major_improvements'] as &$card_id) {
 				if (! preg_match('/_/', $card_id)) {
 					$card_id .= '_';
