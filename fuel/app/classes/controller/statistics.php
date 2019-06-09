@@ -58,8 +58,9 @@ class Controller_Statistics extends Controller_Template
 
 		$this->template->title = '['.$username.'] '.$user_data['screen_name'];
 		$this->template->breadcrumbs = [
-			'/statistics' => '統計',
-			'/statistics/user/' . $username => $this->template->title,
+			'/users' => 'メンバー',
+			'/users/view/' . $username => $this->template->title,
+			'/statistics/user/' . $username => '統計',
 		];
 
 		$this->template->content->transition_normal = Model_GamesScores::get_transition($username, 0);
