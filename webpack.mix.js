@@ -21,5 +21,6 @@ mix.js('resources/js/materialize.js', 'public/assets/js')
 	.js('resources/js/statistics_cardsuses.js', 'public/assets/js')
 	.js('resources/js/statistics_score.js', 'public/assets/js')
 	.js('resources/js/statistics_user.js', 'public/assets/js')
+	.js('resources/js/statistics_order.js', 'public/assets/js')
 	.sass('resources/sass/app.scss', 'public/assets/css')
 	.sass('resources/sass/app_async.scss', 'public/assets/css');

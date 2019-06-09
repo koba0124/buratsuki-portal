@@ -70,4 +70,18 @@ class Controller_Statistics extends Controller_Template
 			'minor_improvement' => Model_GamesCards::get_uses_ranking_by_user($username, 'minor_improvement', 2),
 		];
 	}
+
+	public function action_order()
+	{
+		$this->template->title = '番手別着順・平均点';
+		$this->template->breadcrumbs = [
+			'/statistics' => '統計',
+			'/statistics/order' => $this->template->title,
+		];
+		$this->template->content = View::forge('statistics/order');
+		Asset::js(['statistics_order.js'], [], 'add_js');
+
+		$this->template->content->score_average_data = Model_GamesScores::get_score_average_by_order();
+		$this->template->content->rank_average_data = Model_GamesScores::get_rank_average_by_order();
+	}
 }
