@@ -19,19 +19,20 @@ class Controller_Cards extends Controller_Template
 		$type = Input::get('t');
 		$deck = Input::get('d');
 		$name = Input::get('n');
+		$description_query = Input::get('q');
 		$this->template->content->decks = self::get_form_decks_list();
 		$this->template->content->t = is_array($type) ? $type : ['1', '2', '3'];
 
-		$count = Model_CardsMaster::count_list($type, $deck, $name);
+		$count = Model_CardsMaster::count_list($type, $deck, $name, $description_query);
 		$config = [
-			'pagination_url' => Uri::create('cards', [], ['t' => $type, 'd' => $deck, 'n' => $name]),
+			'pagination_url' => Uri::create('cards', [], ['t' => $type, 'd' => $deck, 'n' => $name, 'q' => $description_query]),
 			'uri_segment' => 'p',
 			'per_page' => 30,
 			'total_items' => $count,
 		];
 		$pagination = Pagination::forge('cards', $config);
 
-		$this->template->content->cards_list = Model_CardsMaster::get_list($type, $deck, $name, $pagination);
+		$this->template->content->cards_list = Model_CardsMaster::get_list($type, $deck, $name, $description_query, $pagination);
 	}
 
 	/**
