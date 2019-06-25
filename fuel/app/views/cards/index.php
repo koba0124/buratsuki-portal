@@ -24,6 +24,10 @@
 					<?= Form::select('d', Input::get('d'), $decks); ?>
 					<label>デッキ</label>
 				</div>
+				<div class="col s12 input-field">
+					<?= Form::input('q', Input::get('q')); ?>
+					<?= Form::label('テキスト(ワード検索)', 'q'); ?>
+				</div>
 				<div class="col s4 l6 input-field">
 					<label>
 						<?= Form::checkbox('t[]', '1', in_array('1', $t), ['id' => 'form_t1']); ?>
