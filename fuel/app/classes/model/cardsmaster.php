@@ -20,14 +20,15 @@ class Model_CardsMaster
 	 * @param  array      $type       職業/小さい進歩/大きい進歩のtype番号
 	 * @param  stirng     $deck       デッキ/デッキグループ
 	 * @param  string     $name       名前に含まれる文字列
+	 * @param  string     $descriotion_query カードテキスト
 	 * @param  Pagination $pagination ページネーション
 	 * @return array      カードレコードの配列
 	 */
-	public static function get_list($type, $deck, $name, $pagination)
+	public static function get_list($type, $deck, $name, $descriotion_query, $pagination)
 	{
 		$query = DB::select('card_id', 'card_id_display', 'japanese_name', 'deck', 'type')
 					->from(self::TABLE_NAME);
-		$query = self::append_where_for_list($query, $type, $deck, $name);
+		$query = self::append_where_for_list($query, $type, $deck, $name, $descriotion_query);
 		$query->order_by('card_id', 'asc');
 		$query->limit($pagination->per_page);
 		$query->offset($pagination->offset);
@@ -39,13 +40,14 @@ class Model_CardsMaster
 	 * @param  array  $type 職業/小さい進歩/大きい進歩のtype番号
 	 * @param  stirng $deck デッキ/デッキグループ
 	 * @param  string $name 名前に含まれる文字列
+	 * @param  string $descriotion_query カードテキスト
 	 * @return int          カード総数
 	 */
-	public static function count_list($type, $deck, $name)
+	public static function count_list($type, $deck, $name, $descriotion_query)
 	{
 		$query = DB::select(DB::expr('COUNT(*) AS count'))
 					->from(self::TABLE_NAME);
-		$query = self::append_where_for_list($query, $type, $deck, $name);
+		$query = self::append_where_for_list($query, $type, $deck, $name, $descriotion_query);
 		return $query->execute()->as_array()[0]['count'] ?? 0;
 	}
 
@@ -55,9 +57,10 @@ class Model_CardsMaster
 	 * @param  array  $type  職業/小さい進歩/大きい進歩のtype番号
 	 * @param  string $deck  デッキ/デッキグループ
 	 * @param  string $name  名前に含まれる文字列
+	 * @param  string $descriotion_query カードテキスト
 	 * @return DB            クエリオブジェクト
 	 */
-	private static function append_where_for_list($query, $type, $deck, $name)
+	private static function append_where_for_list($query, $type, $deck, $name, $descriotion_query)
 	{
 		$deck_groups_list = Model_DeckGroupsMaster::get_list();
 		if ($deck) {
@@ -76,6 +79,18 @@ class Model_CardsMaster
 		}
 		if ($name) {
 			$query->where('japanese_name', 'like', '%' . $name . '%');
+		}
+		if ($descriotion_query) {
+			$descriotion_query = trim(str_replace('　', ' ', $descriotion_query));
+			$keywords = explode(' ', $descriotion_query);
+			foreach ($keywords as $keyword) {
+				if (strlen($keyword) === 0) continue;
+				if (mb_substr($keyword, 0, 1) === '-') {
+					$query->where('description', 'not like', '%' . mb_substr($keyword, 1, null) . '%');
+				} else {
+					$query->where('description', 'like', '%' . $keyword . '%');
+				}
+			}
 		}
 		return $query;
 	}
