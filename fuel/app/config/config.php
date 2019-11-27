@@ -11,7 +11,7 @@
  */
 
 return array(
-	'version' => '2.2.6',
+	'version' => '2.2.8',
 
 	/**
 	 * base_url - The base URL of the application.
