@@ -29,6 +29,25 @@ class Controller_Statistics extends Controller_Template
 		}
 	}
 
+	public function action_revisedcardsuses()
+	{
+		$this->template->title = 'カード使用・勝利回数(Revised)';
+		$this->template->breadcrumbs = [
+			'/statistics' => '統計',
+			'/statistics/revisedcardsuses' => $this->template->title,
+		];
+		$this->template->content = View::forge('statistics/cardsuses');
+		Asset::js(['statistics_cardsuses.js'], [], 'add_js');
+
+		$types = ['occupation', 'minor_improvement'];
+		$this->template->content->uses_ranking = [];
+		$this->template->content->wins_ranking = [];
+		foreach ($types as $type) {
+			$this->template->content->uses_ranking[$type] = Model_GamesCards::get_uses_ranking($type, 4);
+			$this->template->content->wins_ranking[$type] = Model_GamesCards::get_wins_ranking($type, 4);
+		}
+	}
+
 	public function action_score()
 	{
 		$this->template->title = 'ハイスコア';
