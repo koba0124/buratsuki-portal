@@ -35,6 +35,7 @@ desktop.ini
 
 /node_modules/
 /public/assets/js/*.js
+/public/assets/js/*.LICENSE
 /public/assets/css/*.css
 /mix-manifest.json
 /public/assets/img/upload/*/*
