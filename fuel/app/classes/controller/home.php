@@ -23,6 +23,7 @@ class Controller_Home extends Controller_Template
 
 		$username = Auth::get_screen_name();
 		$this->template->content->games_list = Model_GamesScores::get_list_for_home($username);
+		$this->template->content->guest_games_list = Model_GamesScores::get_list_for_home_guest();
 	}
 
 	/**
