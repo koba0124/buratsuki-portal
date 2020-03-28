@@ -1,5 +1,5 @@
 FROM php:7.2-fpm
-RUN apt-get update && apt-get install -y libmcrypt-dev mysql-client \
+RUN apt-get update && apt-get install -y libmcrypt-dev default-mysql-client \
     && apt-get install libmagickwand-dev -y --no-install-recommends \
     && pecl install mcrypt-1.0.1 \
     && docker-php-ext-enable mcrypt \
