@@ -8,7 +8,7 @@
 	</div>
 	<div>
 		<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-		<?= Html::anchor(Uri::create('https://twitter.com/share', [], ['url' => Uri::current(), 'hashtags' => 'ぶらつき学生ポータル']), 'Tweet', ['class' => 'twitter-share-button', 'data-show-count' => 'false']); ?>
+		<?= Html::anchor(Uri::create('https://twitter.com/share', [], ['url' => Uri::current(), 'hashtags' => 'ほら吹き社会人ポータル']), 'Tweet', ['class' => 'twitter-share-button', 'data-show-count' => 'false']); ?>
 	</div>
 	<h2 class="orange-text">スコア</h2>
 	<table class="striped">

@@ -27,7 +27,7 @@
 	<nav>
 		<div class="nav-wrapper">
 			<div class="hide-on-med-and-down left">
-				<?= Html::anchor('/', 'ぶらつき学生ポータル', ['class' => 'breadcrumb']); ?>
+				<?= Html::anchor('/', 'ほら吹き社会人ポータル', ['class' => 'breadcrumb']); ?>
 				<?php foreach ($breadcrumbs ?? [] as $uri => $name): ?>
 				<?= Html::anchor($uri, $name, ['class' => 'breadcrumb']); ?>
 				<?php endforeach; ?>
