@@ -80,7 +80,7 @@ class Model_GamesScores
 					->where('fields', '=', null)
 					->join(Model_Games::TABLE_NAME, 'inner')
 					->on(self::TABLE_NAME . '.game_id', '=', Model_Games::TABLE_NAME . '.game_id')
-					->and('owner', '=', $username)
+					->and_on('owner', '=', $username)
 					->join(Model_RegulationsMaster::TABLE_NAME, 'inner')
 					->on(Model_RegulationsMaster::TABLE_NAME . '.regulation_type', '=', Model_Games::TABLE_NAME . '.regulation_type')
 					->order_by('created_at', 'desc');
