@@ -58,6 +58,36 @@ class Model_GamesScores
 	}
 
 	/**
+	 * マイページ用に未編集戦績レコードを取得
+	 * @param  string $username ユーザID
+	 * @return array            GamesScoresレコードの配列
+	 */
+	public static function get_list_for_home_owner($username)
+	{
+		$columns = [
+			Model_Games::TABLE_NAME . '.game_id',
+			'player_order',
+			'username',
+			'players_number',
+			'regulation_name',
+			'created_at',
+			'is_moor',
+			'owner',
+			'created_at',
+		];
+		$query = DB::select_array($columns)
+					->from(self::TABLE_NAME)
+					->where('fields', '=', null)
+					->join(Model_Games::TABLE_NAME, 'inner')
+					->on(self::TABLE_NAME . '.game_id', '=', Model_Games::TABLE_NAME . '.game_id')
+					->and('owner', '=', $username)
+					->join(Model_RegulationsMaster::TABLE_NAME, 'inner')
+					->on(Model_RegulationsMaster::TABLE_NAME . '.regulation_type', '=', Model_Games::TABLE_NAME . '.regulation_type')
+					->order_by('created_at', 'desc');
+		return $query->execute()->as_array();
+	}
+
+	/**
 	 * マイページ用に未編集戦績レコードを取得(Guest)
 	 * @return array            GamesScoresレコードの配列
 	 */
@@ -85,6 +115,8 @@ class Model_GamesScores
 					->order_by('created_at', 'desc');
 		return $query->execute()->as_array();
 	}
+
+
 
 	/**
 	 * 戦績編集用にGamesScoresレコードを取得

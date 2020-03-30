@@ -69,7 +69,7 @@
 	<p>
 		<?= $record['total_points']; ?>点 / <?= $record['rank']; ?>位
 	</p>
-	<?php if (Auth::get_screen_name() === $record['username'] or 'Guest' === $record['username']): ?>
+	<?php if (Auth::get_screen_name() === $record['username'] or 'Guest' === $record['username'] or Auth::get_screen_name() === $data['owner']): ?>
 	<?= Html::anchor('/games/edit/'.$record['game_id'].'/'.$order, '編集する'); ?>
 	<?php endif; ?>
 	<div class="row">
