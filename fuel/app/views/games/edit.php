@@ -2,6 +2,7 @@
 	<h2 class="orange-text">ゲーム情報</h2>
 	<div class="collection">
 		<div class="collection-item">
+		    プレイヤー：<?= $data['username']; ?><br>
 			<?= $data['players_number']; ?>人ゲーム / <?= $data['regulation_name']; ?><?php if ($data['is_moor']) echo '(泥沼)'; ?> / <?= $data['player_order']; ?>番手<br>
 			<?= $data['owner']; ?>さんが作成 [<?= $data['created_at']; ?>]
 		</div>
