@@ -19,14 +19,14 @@
 		<div class="col s12 m6">
 			<h2 class="teal-text">リンク集(仮)</h2>
 			<div class="collection">
-				<a href="https://blog.buratsuki.work/" target="_blank" rel="noopener" class="collection-item">
-					ぶらつき学生連盟 - Blog
+				<a href="https://agricola.playing.wiki/" target="_blank" rel="noopener" class="collection-item">
+					農業のすヽめ(アグリコラ リバイズド)攻略wiki
+				</a>
+				<a href="https://docs.google.com/spreadsheets/d/1F0aWurN1tqbUcx7EQEeQKWgqnp7kJj3DLsVlhtWyz5A/edit?usp=sharing" target="_blank" rel="noopener" class="collection-item">
+					Agricola Database（英語版カードリスト） ※Googleスプレッドシート
 				</a>
 				<a href="https://draft.buratsuki.work/" target="_blank" rel="noopener" class="collection-item">
 					Agricola Online Draft (β版)
-				</a>
-				<a href="https://log.buratsuki.work/" target="_blank" rel="noopener" class="collection-item">
-					LogRicola
 				</a>
 				<a href="https://github.com/Arthur1/buratsuki-portal" target="_blank" rel="noopener" class="collection-item">Github - Arthur1/buratsuki-portal</a>
 			</div>

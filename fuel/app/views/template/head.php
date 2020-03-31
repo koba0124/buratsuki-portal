@@ -4,6 +4,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="msapplication-config" content="/browserconfig.xml">
+	<meta name="robots" content="noindex">
 	<meta name="theme-color" content="#ff9800">
 	<!-- OGP [ -->
 	<meta property="og:title" content="<?= $title ?? ''; ?> | ほら吹き社会人ポータル">
