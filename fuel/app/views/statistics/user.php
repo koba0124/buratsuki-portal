@@ -5,7 +5,7 @@
     <canvas id="distribution_chart"></canvas>
     <h2 class="orange-text">使用回数の多いカード</h2>
     <p>
-		レギュレーションは旧版拡張、2人以上のゲームを集計対象としています。
+		レギュレーションはRevised拡張、2人以上のゲームを集計対象としています。
 	</p>
     <div class="row">
         <?php $types = ['occupation' => '職業', 'minor_improvement' => '小さい進歩']; ?>
