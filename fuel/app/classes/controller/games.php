@@ -382,7 +382,7 @@ class Controller_Games extends Controller_Template
 				break;
 			case '日時を更新する':
 				$val = Validation::forge();
-				$val->add('created_at_new', '新しい日時')->add_rule('required')->add_rule('valid_date')
+				$val->add('created_at_new', '新しい日時')->add_rule('required')->add_rule('valid_date');
 				if ($val->run())
 				{
 					// バリデーションに成功した場合の処理
