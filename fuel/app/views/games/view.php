@@ -115,6 +115,7 @@
 	<h3 class="red-text">ゲーム作成者メニュー</h3>
 	<div class="collection">
 		<?= Html::anchor('#modal_calc_rank', '順位自動計算', ['class' => 'modal-trigger collection-item']); ?>
+		<?= Html::anchor('#modal_set_date', '日時設定', ['class' => 'modal-trigger collection-item']); ?>
 		<?= Html::anchor('#modal_delete', 'ゲーム削除', ['class' => 'modal-trigger collection-item']); ?>
 	</div>
 	<?php endif; ?>
@@ -130,6 +131,21 @@
 		<?= Form::button('submit', '計算する', ['class' => 'waves-effect waves-teal btn-flat teal-text', 'value' => '計算する']); ?>
 	</div>
 </div>
+<div id="modal_set_date" class="modal">
+	<div class="modal-content">
+		<h4 class="teal-text">日時設定</h4>
+		<p>ゲーム開催日時を変更します。</p>
+		<div class="input-field">
+			<?= Form::input('created_at_new', Input::post('created_at_new', $data['created_at']), ['type' => 'datetime-local']); ?>
+			<?= Form::label('新しい日時', 'created_at_new'); ?>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<a href="#!" class="modal-close waves-effect waves-grey btn-flat">戻る</a>
+		<?= Form::button('submit', '日時を更新する', ['class' => 'waves-effect waves-teal btn-flat teal-text', 'value' => '日時を更新する']); ?>
+	</div>
+</div>
+
 <div id="modal_delete" class="modal">
 	<div class="modal-content">
 		<h4 class="red-text">ゲーム削除</h4>

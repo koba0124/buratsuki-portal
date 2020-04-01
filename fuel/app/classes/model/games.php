@@ -81,4 +81,17 @@ class Model_Games
 					->where('game_id', '=', $game_id);
 		return $query->execute();
 	}
+
+	/**
+	 * ゲーム日時を更新
+	 * @param  string $game_id        ゲームID
+	 * @param  string $created_at_new 日時
+	 */
+	public static function update_date($game_id, $created_at_new)
+	{
+		$query = DB::update(self::TABLE_NAME)
+					->value('created_at', date_parse($created_at_new));
+					->where('game_id', '=', $game_id)
+		$query->execute();
+	}
 }
