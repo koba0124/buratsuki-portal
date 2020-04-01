@@ -90,8 +90,8 @@ class Model_Games
 	public static function update_date($game_id, $created_at_new)
 	{
 		$query = DB::update(self::TABLE_NAME)
-					->value('created_at', date_parse($created_at_new));
-					->where('game_id', '=', $game_id)
+					->value('created_at', date_parse($created_at_new))
+					->where('game_id', '=', $game_id);
 		$query->execute();
 	}
 }
