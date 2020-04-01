@@ -137,7 +137,6 @@
 		<p>ゲーム開催日時を変更します。</p>
 		<div class="input-field">
 			<?= Form::input('created_at_new', Input::post('created_at_new', $data['created_at']), ['type' => 'datetime-local']); ?>
-			<?= Form::label('新しい日時', 'created_at_new'); ?>
 		</div>
 	</div>
 	<div class="modal-footer">
