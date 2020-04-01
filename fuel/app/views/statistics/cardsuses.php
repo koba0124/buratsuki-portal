@@ -11,7 +11,7 @@
 	<div class="col s12" id="uses_<?= $type; ?>">
 		<div class="container">
 			<p>
-				レギュレーションは旧版拡張、2人以上のゲームを集計対象としています。
+				拡張、2人以上のゲームを集計対象としています。
 			</p>
 			<table>
 				<thead>
