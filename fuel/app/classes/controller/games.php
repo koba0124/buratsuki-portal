@@ -380,6 +380,24 @@ class Controller_Games extends Controller_Template
 				Session::set_flash('messages', '順位を自動計算しました');
 				Response::redirect('games/view/' . $game_id);
 				break;
+			case '日時を更新する':
+				$val = Validation::forge();
+				$val->add('created_at_new', '新しい日時')->add_rule('required')->add_rule('valid_date')
+				if ($val->run())
+				{
+					// バリデーションに成功した場合の処理
+					Model_Games::update_date($game_id,Input::post('created_at_new'));
+					Session::set_flash('messages', 'ゲーム日時を更新しました。');
+					Response::redirect('games/view/' . $game_id);
+				}
+				else
+				{
+					// 失敗
+					Session::set_flash('errors', '新しい日付が不正です。');
+					Response::redirect('games/view/' . $game_id);
+					return;
+				}
+				break;
 			default:
 		}
 	}
