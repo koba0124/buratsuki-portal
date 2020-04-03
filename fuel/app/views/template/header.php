@@ -39,6 +39,7 @@
 				<li><?= Html::anchor('/cards', 'カード'); ?></li>
 				<li><?= Html::anchor('/users', 'メンバー'); ?></li>
 				<li><?= Html::anchor('/statistics', '統計'); ?></li>
+				<li><?= Html::anchor('/tts', 'TTS'); ?></li>
 				<?php if (Auth::check()): ?>
 				<li><?= Html::anchor('/home', 'マイページ'); ?></li>
 				<?php else: ?>

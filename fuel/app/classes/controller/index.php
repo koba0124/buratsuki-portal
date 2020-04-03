@@ -23,6 +23,19 @@ class Controller_Index extends Controller_Template
 	}
 
 	/**
+	 * ネットでアグリコラ(TTS) /tts GET
+	 */
+	public function action_tts()
+	{
+		$this->template->title = 'Table Top Simulator';
+		$this->template->breadcrumbs = [
+			'/tts' => 'Table Top Simulator',
+		];
+		$this->template->content = View::forge('tts');
+	}
+
+
+	/**
 	 * 404ページ GET
 	 */
 	public function action_404()
