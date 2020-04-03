@@ -16,6 +16,7 @@
 	<li><?= Html::anchor('/cards', '<i class="material-icons">find_in_page</i>カード'); ?></li>
 	<li><?= Html::anchor('/users', '<i class="material-icons">people</i>メンバー'); ?></li>
 	<li><?= Html::anchor('/statistics', '<i class="material-icons">folder</i>統計'); ?></li>
+	<li><?= Html::anchor('/tts', '<i class="material-icons">folder</i>TTS'); ?></li>
 	<li><div class="divider"></div></li>
 	<?php if (Auth::check()): ?>
 	<li><?= Html::anchor('/home', 'マイページ'); ?></li>

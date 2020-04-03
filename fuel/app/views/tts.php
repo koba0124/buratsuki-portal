@@ -10,8 +10,9 @@
 	<p>
 		Steam Communityで、下記のワークショップをサブスクライブしてください。<br>
 		<a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2046438707" target="_blank" rel="noopener">Agricola Customized</a><br>
-		下記のオリジナルにカスタマイズを加えたものです。<br><br>
-		<a href="https://steamcommunity.com/sharedfiles/filedetails/?id=1931752711" target="_blank" rel="noopener">Agricola (Revised Edition, scripted)</a>
+		<br>
+		※これは、下記のオリジナルに私が少しカスタマイズを加えたものです。<br>
+		https://steamcommunity.com/sharedfiles/filedetails/?id=1931752711
 	</p>
 
 	<h2 class="orange-text" id="browser">操作方法</h2>
