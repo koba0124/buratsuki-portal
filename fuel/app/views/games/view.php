@@ -88,6 +88,7 @@
 		<?php endforeach; ?>
 	</div>
 	<h4 class="teal-text">ドラフト</h4>
+	<?= Html::anchor('#pack' . $order, "ドラフト譜はこちら");?>
 	<div class="row">
 		<?php foreach ($cards_type_list as $type => $label): 
 			if ($type == 'major_improvement') { continue; }?>
