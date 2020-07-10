@@ -225,7 +225,7 @@ class Controller_Games extends Controller_Template
 
 		Model_GamesScores::update($game_id, $player_order, $image);
 		Model_GamesCards::update($game_id, $player_order, $cards_list);
-		Model_DraftCards::update($game_id, $player_order, $cards_list);
+		Model_DraftCards::update($game_id, $player_order, $draft_list);
 
 		Session::set_flash('messages', '戦績の編集に成功しました');
 		Response::redirect('/games/view/'.$game_id);
