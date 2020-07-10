@@ -89,17 +89,18 @@
 	</div>
 	<div class="row">
 		<?php foreach ($cards_type_list as $type => $label): 
-			if($field == 'major_improvement'){continue;}?>
+			if ($field == 'major_improvement') { continue; }?>
 		<div class="col s12 m6 l4">
 			<h4 class="<?= $type; ?>-text"><?= $label; ?></h4>
 			<div class="collection">
 				<?php foreach ($draft_data[$order][$type . 's'] ?? [] as $card): ?>
-					<?php if(!empty($card)): ?>
+					<?php if (!empty($card)): ?>
 						<a href="#modal_draftcard_<?= $order; ?>_<?= $card['card_id']; ?>" class="modal-trigger collection-item">
 							<?= $card['japanese_name']; ?>
 							<span class="new <?= Model_CardsMaster::get_type($card); ?>-bg darken-2 badge" data-badge-caption=""><?= $card['card_id_display']; ?></span>
 						</a>
 					<?php else: ?>
+						<span>？？？</span>
 					<?php endif; ?>
 
 				<?php endforeach; ?>

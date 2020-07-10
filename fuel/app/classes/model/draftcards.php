@@ -50,7 +50,7 @@ class Model_DraftCards
 
 		foreach ($types as $field ) {
 			foreach ($cards_list[$field . 's'] as $index => $card {
-				if(!empty($card)){
+				if (!empty($card)) {
 					$count++;
 					$query->values([$game_id, $player_order,$index, $card]);
 				}
