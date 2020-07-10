@@ -79,7 +79,7 @@ class Model_DraftCards
 					->on(Model_CardsMaster::TABLE_NAME . '.deck', '=', Model_DecksMaster::TABLE_NAME . '.deck');
 		$records = $query->execute()->as_array();
 
-		$data = array()
+		$data = array();
 		for ($i = 1; $i =< $players_number; $i++){
 			$data[$i] = 		[
 				'occupations' => array_fill(0, 9,'' ),
