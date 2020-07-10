@@ -148,17 +148,25 @@
 					   		$card = $draft_data[$picker][$type . 's'][$i]; ?>
 						<?php if (!empty($card)) : ?>
 							<a href="#modal_draftcard_<?= $picker; ?>_<?= $card['card_id']; ?>" class="modal-trigger collection-item">
-								<span class="badge left"><?= $score_data[$picker]['profile_fields']['screen_name'] ?? 'unknown'; ?></span>
+								<span class="badge left"><?= $score_data[$picker]['profile_fields']['screen_name'] ?? 'unknown'; ?>
+									<?php if ($i > 6) : ?>
+										（残り）
+									<?php endif ; ?>
+								</span>
 									<?= $card['japanese_name']; ?>
 								<span class="new <?= Model_CardsMaster::get_type($card); ?>-bg darken-2 badge" data-badge-caption=""><?= $card['card_id_display']; ?></span>
 							</a>
 						<?php else : ?>
 							<a class="collection-item">
-								<span class="badge left"><?= $score_data[$picker]['profile_fields']['screen_name'] ?? 'unknown'; ?></span>
+								<span class="badge left"><?= $score_data[$picker]['profile_fields']['screen_name'] ?? 'unknown'; ?>
+									<?php if ($i > 6) : ?>
+										（残り）
+									<?php endif ; ?>
+								</span>
 								？　？　？
 							</a>
 						<?php endif ; ?>
-						<?php if ($i < 7) {$picker++;} ?>
+						<?php if ($i < 6) {$picker++;} ?>
 						<?php if ($picker > $data['players_number']) {$picker = 1;} ?>						
 					<?php endfor; ?>
 				</div>
