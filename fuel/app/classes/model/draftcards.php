@@ -68,7 +68,7 @@ class Model_DraftCards
 	 * @param  string $game_id ゲームID
 	 * @return array           番手 => カードタイプ => GamesCardsレコードの配列
 	 */
-	public static function get_for_view($game_id)
+	public static function get_for_view($game_id,$players_number)
 	{
 		$query = DB::select()
 					->from(self::TABLE_NAME)
@@ -79,10 +79,13 @@ class Model_DraftCards
 					->on(Model_CardsMaster::TABLE_NAME . '.deck', '=', Model_DecksMaster::TABLE_NAME . '.deck');
 		$records = $query->execute()->as_array();
 
-		$data = [
-			'occupations' => array_fill(0, 9,'' ),
-			'minor_improvements' => array_fill(0, 9,'' ),
-		];
+		$data = array()
+		foreach ($i = 1; $i =< $players_number; $i++){
+			$data[$i] = 		[
+				'occupations' => array_fill(0, 9,'' ),
+				'minor_improvements' => array_fill(0, 9,'' ),
+			];	
+		}
 		foreach ($records as $record) {
 			$data[$record['player_order']][$record['type'] . 's'][$record['pick_order']] = $record;
 		}
