@@ -77,7 +77,7 @@
 		<div class="col s12 m6 l4">
 			<h4 class="<?= $type; ?>-text"><?= $label; ?></h4>
 			<div class="collection">
-				<?php foreach ($cards_data[$order][$type . 's'] as $card): ?>
+				<?php foreach ($cards_data[$order][$type . 's'] ?? [] as $card): ?>
 				<a href="#modal_card_<?= $order; ?>_<?= $card['card_id']; ?>" class="modal-trigger collection-item">
 					<?= $card['japanese_name']; ?>
 					<span class="new <?= Model_CardsMaster::get_type($card); ?>-bg darken-2 badge" data-badge-caption=""><?= $card['card_id_display']; ?></span>
