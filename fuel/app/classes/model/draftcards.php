@@ -20,8 +20,8 @@ class Model_DraftCards
 					->order_by('pick_order','asc');
 		$records = $query->execute()->as_array();
 		$list = [
-			'occupations' => array_fill(0, 9,'' ),
-			'minor_improvements' => array_fill(0, 9,'' ),
+			'occupations' => array_fill(0, 10,'' ),
+			'minor_improvements' => array_fill(0, 10,'' ),
 		];
 		foreach ($records as $record) {
 			$list[$record['type'] . 's'][$record['pick_order']] = $record['card_id'];
@@ -82,8 +82,8 @@ class Model_DraftCards
 		$data = array();
 		for ($i = 1; $i <= $players_number; $i++){
 			$data[$i] = 		[
-				'occupations' => array_fill(0, 9,'' ),
-				'minor_improvements' => array_fill(0, 9,'' ),
+				'occupations' => array_fill(0, 10,'' ),
+				'minor_improvements' => array_fill(0, 10,'' ),
 			];	
 		}
 		foreach ($records as $record) {

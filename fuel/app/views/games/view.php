@@ -91,10 +91,11 @@
 	<div class="row">
 		<?php foreach ($cards_type_list as $type => $label): 
 			if ($type == 'major_improvement') { continue; }?>
-		<div class="col s12 m6 l4">
+		<div class="col s12 m6 l6">
 			<h4 class="<?= $type; ?>-text"><?= $label; ?></h4>
 			<div class="collection">
-				<?php foreach ($draft_data[$order][$type . 's'] ?? [] as $card): ?>
+				<?php foreach ($draft_data[$order][$type . 's'] ?? [] as $index => $card): ?>
+					<?php if ($index >= 7) { continue; }?>
 					<?php if (!empty($card)) : ?>
 						<a href="#modal_draftcard_<?= $order; ?>_<?= $card['card_id']; ?>" class="modal-trigger collection-item">
 							<?= $card['japanese_name']; ?>
