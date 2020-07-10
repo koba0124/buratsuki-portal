@@ -77,11 +77,31 @@
 		<div class="col s12 m6 l4">
 			<h4 class="<?= $type; ?>-text"><?= $label; ?></h4>
 			<div class="collection">
-				<?php foreach ($cards_data[$order][$type . 's'] ?? [] as $card): ?>
+				<?php foreach ($cards_data[$order][$type . 's'] as $card): ?>
 				<a href="#modal_card_<?= $order; ?>_<?= $card['card_id']; ?>" class="modal-trigger collection-item">
 					<?= $card['japanese_name']; ?>
 					<span class="new <?= Model_CardsMaster::get_type($card); ?>-bg darken-2 badge" data-badge-caption=""><?= $card['card_id_display']; ?></span>
 				</a>
+				<?php endforeach; ?>
+			</div>
+		</div>
+		<?php endforeach; ?>
+	</div>
+	<div class="row">
+		<?php foreach ($cards_type_list as $type => $label): 
+			if($field == 'major_improvement'){continue;}?>
+		<div class="col s12 m6 l4">
+			<h4 class="<?= $type; ?>-text"><?= $label; ?></h4>
+			<div class="collection">
+				<?php foreach ($draft_data[$order][$type . 's'] ?? [] as $card): ?>
+					<?php if(!empty($card)): ?>
+						<a href="#modal_draftcard_<?= $order; ?>_<?= $card['card_id']; ?>" class="modal-trigger collection-item">
+							<?= $card['japanese_name']; ?>
+							<span class="new <?= Model_CardsMaster::get_type($card); ?>-bg darken-2 badge" data-badge-caption=""><?= $card['card_id_display']; ?></span>
+						</a>
+					<?php else: ?>
+					<?php endif; ?>
+
 				<?php endforeach; ?>
 			</div>
 		</div>
@@ -161,6 +181,45 @@
 <?php foreach ($order_cards as $type_cards ): ?>
 <?php foreach ($type_cards as $card): ?>
 <div id="modal_card_<?= $order; ?>_<?= $card['card_id'] ?>" class="modal">
+	<div class="modal-content">
+		<h4 class="<?= Model_CardsMaster::get_type($card); ?>-text">
+			<?= $card['japanese_name']; ?>
+			<span class="new <?= Model_CardsMaster::get_type($card); ?>-bg badge" data-badge-caption=""><?= $card['card_id_display']; ?></span>
+		</h4>
+		<dl>
+			<dt class="teal-text">デッキ</dt>
+			<dd><?= $card['deck_name']; ?></dd>
+			<?php if (! empty($card['prerequisite'])): ?>
+			<dt class="teal-text">前提</dt>
+			<dd><?= $card['prerequisite']; ?></dd>
+			<?php endif; ?>
+			<?php if (! empty($card['costs'])): ?>
+			<dt class="teal-text">コスト</dt>
+			<dd><?= $card['costs']; ?></dd>
+			<?php endif; ?>
+			<?php if (! empty($card['card_points'])): ?>
+			<dt class="teal-text">カード点</dt>
+			<dd><?= $card['card_points']; ?>点</dd>
+			<?php endif; ?>
+			<?php if (! empty($card['category'])): ?>
+			<dt class="teal-text">カテゴリー</dt>
+			<dd><?= $card['category']; ?>+</dd>
+			<?php endif; ?>
+		</dl>
+		<div>
+			<?= nl2br($card['description']); ?>
+		</div>
+		<?= Html::anchor('cards/view/' . $card['card_id'], 'カードの詳細ページを見る'); ?>
+	</div>
+</div>
+<?php endforeach; ?>
+<?php endforeach; ?>
+<?php endforeach; ?>
+<?php foreach ($draft_data as $order => $order_cards): ?>
+<?php foreach ($order_cards as $type_cards ): ?>
+<?php foreach ($type_cards as $card): ?>
+<?php if(empty($card){continue;} ?>
+<div id="modal_draftcard_<?= $order; ?>_<?= $card['card_id'] ?>" class="modal">
 	<div class="modal-content">
 		<h4 class="<?= Model_CardsMaster::get_type($card); ?>-text">
 			<?= $card['japanese_name']; ?>

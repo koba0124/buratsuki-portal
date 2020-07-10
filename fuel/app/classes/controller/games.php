@@ -138,6 +138,7 @@ class Controller_Games extends Controller_Template
 			throw new HttpNotFoundException;
 		}
 
+		
 		$this->template->title = '編集';
 		$this->template->breadcrumbs = [
 			'/games' => '戦績',
@@ -148,6 +149,7 @@ class Controller_Games extends Controller_Template
 		$this->template->content->error_fields = [];
 		$this->template->content->data = $data;
 		$this->template->content->cards_data = Model_GamesCards::get_for_edit($game_id, $player_order);
+		$this->template->content->draft_data = Model_DraftCards::get_for_edit($game_id, $player_order);
 		$this->template->content->basic_points_list = self::BASIC_POINTS_LIST;
 		$this->template->content->cards_type_list = Model_CardsMaster::TYPES_LABEL;
 		Asset::js(['games_edit.js'], [], 'add_js');
@@ -166,11 +168,15 @@ class Controller_Games extends Controller_Template
 
 		// 空要素を詰める
 		$cards_list = [];
+		$draft_list = [];
 		foreach ($this->template->content->cards_type_list as $field => $label) {
 			$cards = Input::post($field . 's', []);
 			// 前後の空白を削除
 			$cards = array_map('trim', $cards);
 			$cards_list[$field . 's'] = array_values(array_filter($cards, 'strlen'));
+			if($field == 'major_improvement'){continue;}
+			$drafts = Input::post('draft' .$field . 's', []);
+			$draft_list[$field . 's'] = $drafts;
 		}
 
 		// Revisedの場合、大進歩番号を置き換え
@@ -185,7 +191,7 @@ class Controller_Games extends Controller_Template
 
 		$this->template->content->cards_list = $cards_list;
 
-		$val = self::validation_edit($this->template->content->data, $cards_list);
+		$val = self::validation_edit($this->template->content->data, $cards_list,$draft_list);
 		if (! $val->run($cards_list)) {
 			$this->template->errors = [];
 			foreach ($val->error() as $field => $error) {
@@ -219,6 +225,7 @@ class Controller_Games extends Controller_Template
 
 		Model_GamesScores::update($game_id, $player_order, $image);
 		Model_GamesCards::update($game_id, $player_order, $cards_list);
+		Model_DraftCards::update($game_id, $player_order, $cards_list);
 
 		Session::set_flash('messages', '戦績の編集に成功しました');
 		Response::redirect('/games/view/'.$game_id);
@@ -228,7 +235,7 @@ class Controller_Games extends Controller_Template
 	 * 戦績編集 Validation
 	 * @return object Validation
 	 */
-	private static function validation_edit($data, $cards)
+	private static function validation_edit($data, $cards,$drafts)
 	{
 		$val = Validation::forge();
 		$val->add_callable('ValidationRule');
@@ -274,6 +281,12 @@ class Controller_Games extends Controller_Template
 				$val->add($field_pr . '.' . $key, $label . '(' . ($key + 1) . '枚目)')
 					->add_rule('valid_' . $field . '_id', $card);
 			}
+			if($field == 'major_improvement'){continue;}
+			foreach ($drafts[$field_pr] as $key => $card) {
+				if(empty($card)){continue;}
+				$val->add('draft' . $field_pr . '.' . $key, $label . '(' . ($key + 1) . '枚目)')
+					->add_rule('valid_' . $field . '_id', $card);
+			}
 		}
 		return $val;
 	}
@@ -314,6 +327,7 @@ class Controller_Games extends Controller_Template
 		$score_data = Model_GamesScores::get_for_view($game_id);
 		$this->template->content->score_data = $score_data;
 		$this->template->content->cards_data = Model_GamesCards::get_for_view($game_id);
+		$this->template->content->draft_data = Model_DraftCards::get_for_view($game_id);
 		$this->template->content->basic_points_list = self::BASIC_POINTS_LIST;
 		$this->template->content->advanced_points_list = self::ADVANCED_POINTS_LIST;
 		$this->template->content->cards_type_list = Model_CardsMaster::TYPES_LABEL;
