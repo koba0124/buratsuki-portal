@@ -105,6 +105,22 @@
 		</div>
 	</div>
 	<?php endforeach; ?>
+	<h2 class="teal-text">ドラフト</h2>
+	<p>
+		ドラフトで取得したカード番号を半角英数字で入力してください。8～10枚目は引かれずに残ったカードです。
+	</p>
+	<?php foreach ($cards_type_list as $field => $label): 
+		if($field == 'major_improvement'){continue;}?>
+	<div class="row" id="<?= $field; ?>s_box">
+		<?php $cards = $draft_data[$field . 's'] ?>
+		<?php foreach ($cards as $key => $card): ?>
+		<div class="col s4 m3 l2 input-field">
+			<?= Form::input('draft' . $field . 's[]', $card, ['class' => Helper::validate_class($error_fields,'draft' . $field . 's', $key), 'id' => 'form_' .'draft' . $field . 's_'.$key]); ?>
+			<?= Form::label('draft' . $label, $field . 's_' . $key); ?>
+		</div>
+		<?php endforeach; ?>
+	</div>
+	<?php endforeach; ?>
 	<div class="row">
 		<div class="col s12 input-field">
 			<?= Form::submit('submit', '編集', ['class' => 'btn teal']); ?>
