@@ -46,7 +46,7 @@ class Model_DraftCards
 					->columns(['game_id', 'player_order', 'pick_order','card_id']);
 		$count = 0;
 
-		$types = ['occupations','minor_improvements'];
+		$types = ['occupation','minor_improvement'];
 
 		foreach ($types as $field ) {
 			foreach ($cards_list[$field . 's'] as $index => $card){
