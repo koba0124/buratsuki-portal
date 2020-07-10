@@ -116,7 +116,7 @@
 		<?php foreach ($cards as $key => $card): ?>
 		<div class="col s4 m3 l2 input-field">
 			<?= Form::input('draft' . $field . 's[]', $card, ['class' => Helper::validate_class($error_fields,'draft' . $field . 's', $key), 'id' => 'form_' .'draft' . $field . 's_'.$key]); ?>
-			<?= Form::label('ドラフト' . $label . $key + 1 , $field . 's_' . $key); ?>
+			<?= Form::label('ドラフト' . $label . ( $key + 1) , $field . 's_' . $key); ?>
 		</div>
 		<?php endforeach; ?>
 	</div>
