@@ -327,7 +327,7 @@ class Controller_Games extends Controller_Template
 		$score_data = Model_GamesScores::get_for_view($game_id);
 		$this->template->content->score_data = $score_data;
 		$this->template->content->cards_data = Model_GamesCards::get_for_view($game_id);
-		$this->template->content->draft_data = Model_DraftCards::get_for_view($game_id);
+		$this->template->content->draft_data = Model_DraftCards::get_for_view($game_id,$data['players_number']);
 		$this->template->content->basic_points_list = self::BASIC_POINTS_LIST;
 		$this->template->content->advanced_points_list = self::ADVANCED_POINTS_LIST;
 		$this->template->content->cards_type_list = Model_CardsMaster::TYPES_LABEL;
