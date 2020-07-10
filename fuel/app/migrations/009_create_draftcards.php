@@ -15,7 +15,7 @@ class Create_DraftCards
 				'pick_order' => ['type' => 'int'],
 				'card_id' => ['constraint' => 32, 'type' => 'varchar'],
 			],
-			['game_id', 'player_order', 'pick_order'],
+			['game_id', 'player_order', 'pick_order','card_id'],
 			false,
 			'InnoDB',
 			'utf8_unicode_ci'
