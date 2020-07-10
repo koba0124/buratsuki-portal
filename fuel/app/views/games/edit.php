@@ -112,7 +112,7 @@
 	<?php foreach ($cards_type_list as $field => $label): 
 		if($field == 'major_improvement'){continue;}?>
 	<div class="row" id="<?= $field; ?>s_box">
-		<?php $cards = $draft_data[$field . 's'] ?>
+		<?php $cards = $draft_list[$field . 's'] ?? $draft_data[$field . 's'] ?>
 		<?php foreach ($cards as $key => $card): ?>
 		<div class="col s4 m3 l2 input-field">
 			<?= Form::input('draft' . $field . 's[]', $card, ['class' => Helper::validate_class($error_fields,'draft' . $field . 's', $key), 'id' => 'form_' .'draft' . $field . 's_'.$key]); ?>
