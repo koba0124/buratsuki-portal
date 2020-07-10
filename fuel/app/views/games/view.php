@@ -158,6 +158,7 @@
 							</a>
 						<?php endif ; ?>
 						<?php if ($i < 7) {$picker++;} ?>
+						<?php if ($picker > $data['players_number']) {$picker = 1;} ?>						
 					<?php endfor; ?>
 				</div>
 			</div>
