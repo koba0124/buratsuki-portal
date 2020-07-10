@@ -87,9 +87,10 @@
 		</div>
 		<?php endforeach; ?>
 	</div>
+	<h4 class="teal-text">ドラフト</h4>
 	<div class="row">
 		<?php foreach ($cards_type_list as $type => $label): 
-			if ($field == 'major_improvement') { continue; }?>
+			if ($type == 'major_improvement') { continue; }?>
 		<div class="col s12 m6 l4">
 			<h4 class="<?= $type; ?>-text"><?= $label; ?></h4>
 			<div class="collection">
@@ -100,7 +101,7 @@
 							<span class="new <?= Model_CardsMaster::get_type($card); ?>-bg darken-2 badge" data-badge-caption=""><?= $card['card_id_display']; ?></span>
 						</a>
 					<?php else : ?>
-						<span>？？？</span>
+						<a class="collection-item"><span>？　？　？</span></a>
 					<?php endif ; ?>
 				<?php endforeach; ?>
 			</div>
