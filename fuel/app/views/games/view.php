@@ -133,6 +133,38 @@
 	</div>
 	<?php endif; ?>
 	<?php endforeach; ?>
+	<h3 class="red-text">ドラフト譜</h3>
+	<?php foreach ($score_data as $order => $record): ?>
+		<h4 class="orange-text" id="pack<?= $order; ?>"><?= $record['profile_fields']['screen_name'] ?? 'unknown'; ?>(<?= $order; ?>番手)のパック</h4>
+		<div class="row">
+			<?php foreach ($cards_type_list as $type => $label): 
+				if ($type == 'major_improvement') { continue; }?>
+			<div class="col s12 m6 l6">
+				<h4 class="<?= $type; ?>-text"><?= $label; ?></h4>
+				<div class="collection">
+					<?php $picker = $order;
+					   for ($i = 0; $i < 10; $i++): 
+					   		$card = $draft_data[$picker][$type . 's'][$i]; ?>
+						<?php if (!empty($card)) : ?>
+							<a href="#modal_draftcard_<?= $picker; ?>_<?= $card['card_id']; ?>" class="modal-trigger collection-item">
+								<span class="new major_improvement-bg badge left"><?= $score_data[$picker]['profile_fields']['screen_name'] ?? 'unknown'; ?></span>
+									<?= $card['japanese_name']; ?>
+								<span class="new <?= Model_CardsMaster::get_type($card); ?>-bg darken-2 badge" data-badge-caption=""><?= $card['card_id_display']; ?></span>
+							</a>
+						<?php else : ?>
+							<a class="collection-item">
+								<span class="new major_improvement-bg badge left"><?= $score_data[$picker]['profile_fields']['screen_name'] ?? 'unknown'; ?></span>
+								？　？　？
+							</a>
+						<?php endif ; ?>
+						<?php if ($i < 7) {$picker++;} ?>
+					<?php endfor; ?>
+				</div>
+			</div>
+			<?php endforeach; ?>
+		</div>
+	<?php endforeach; ?>
+
 	<?php if (Auth::get_screen_name() === $data['owner']): ?>
 	<h3 class="red-text">ゲーム作成者メニュー</h3>
 	<div class="collection">
