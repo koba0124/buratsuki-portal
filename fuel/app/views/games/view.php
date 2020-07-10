@@ -94,15 +94,14 @@
 			<h4 class="<?= $type; ?>-text"><?= $label; ?></h4>
 			<div class="collection">
 				<?php foreach ($draft_data[$order][$type . 's'] ?? [] as $card): ?>
-					<?php if (!empty($card)): ?>
+					<?php if (!empty($card)) : ?>
 						<a href="#modal_draftcard_<?= $order; ?>_<?= $card['card_id']; ?>" class="modal-trigger collection-item">
 							<?= $card['japanese_name']; ?>
 							<span class="new <?= Model_CardsMaster::get_type($card); ?>-bg darken-2 badge" data-badge-caption=""><?= $card['card_id_display']; ?></span>
 						</a>
-					<?php else: ?>
+					<?php else : ?>
 						<span>？？？</span>
-					<?php endif; ?>
-
+					<?php endif ; ?>
 				<?php endforeach; ?>
 			</div>
 		</div>
@@ -219,7 +218,7 @@
 <?php foreach ($draft_data as $order => $order_cards): ?>
 <?php foreach ($order_cards as $type_cards ): ?>
 <?php foreach ($type_cards as $card): ?>
-<?php if(empty($card){continue;} ?>
+<?php if ( empty($card)) { continue; } ?>
 <div id="modal_draftcard_<?= $order; ?>_<?= $card['card_id'] ?>" class="modal">
 	<div class="modal-content">
 		<h4 class="<?= Model_CardsMaster::get_type($card); ?>-text">
