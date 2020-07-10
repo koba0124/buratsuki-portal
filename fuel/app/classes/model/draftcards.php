@@ -80,7 +80,7 @@ class Model_DraftCards
 		$records = $query->execute()->as_array();
 
 		$data = array()
-		foreach ($i = 1; $i =< $players_number; $i++){
+		for ($i = 1; $i =< $players_number; $i++){
 			$data[$i] = 		[
 				'occupations' => array_fill(0, 9,'' ),
 				'minor_improvements' => array_fill(0, 9,'' ),
