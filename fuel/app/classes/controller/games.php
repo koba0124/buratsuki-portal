@@ -190,6 +190,7 @@ class Controller_Games extends Controller_Template
 		}
 
 		$this->template->content->cards_list = $cards_list;
+		$this->template->content->draft_list = $draft_list;
 
 		$val = self::validation_edit($this->template->content->data, $cards_list,$draft_list);
 		if (! $val->run($cards_list)) {
