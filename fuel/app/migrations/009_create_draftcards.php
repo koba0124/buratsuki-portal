@@ -12,7 +12,6 @@ class Create_DraftCards
 			[
 				'game_id' => ['constraint' => 32, 'type' => 'varchar'],
 				'player_order' => ['type' => 'int'],
-				'username' => ['constraint' => 50, 'type' => 'varchar'],
 				'pick_order' => ['type' => 'int'],
 				'card_id' => ['constraint' => 32, 'type' => 'varchar'],
 			],
