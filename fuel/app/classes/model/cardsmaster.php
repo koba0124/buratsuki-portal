@@ -83,7 +83,7 @@ class Model_CardsMaster
 			if($others){
 				$query->and_where_open();
 				$query->where('type', 'not in',array_values( self::TYPES ));
-				if (is_array($types)){
+				if (!empty($types)){
 					$query->or_where('type', 'in', $types);
 				}
 				$query->and_where_close();
