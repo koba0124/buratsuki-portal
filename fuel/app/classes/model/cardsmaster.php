@@ -72,10 +72,24 @@ class Model_CardsMaster
 		}
 		if (is_array($type)) {
 			$types = [];
+			$others = false;
 			foreach ($type as $t) {
-				$types[] = self::TYPES[$t] ?? $t;
+				if($t == '4'){
+					$others = true;
+				} else {
+					$types[] = self::TYPES[$t] ?? $t;
+				}
 			}
-			$query->where('type', 'in', $types);
+			if($others){
+				$query->and_where_open();
+				$query->where('type', 'not in',array_values( self::TYPES ));
+				if (is_array($types)){
+					$query->or_where('type', 'in', $types);
+				}
+				$query->and_where_close();
+			} else {
+				$query->where('type', 'in', $types);
+			}
 		}
 		if ($name) {
 			$query->where('japanese_name', 'like', '%' . $name . '%');

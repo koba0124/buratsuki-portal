@@ -46,6 +46,12 @@
 						<span>大進歩</span>
 					</label>
 				</div>
+				<div class="col s4 l6 input-field">
+					<label>
+						<?= Form::checkbox('t[]', '4', in_array('4', $t), ['id' => 'form_t4']); ?>
+						<span>その他</span>
+					</label>
+				</div>
 				</div>
 				<div class="col s12 input-field">
 					<?= Form::submit('submit', '検索', ['class' => 'btn teal']); ?>
