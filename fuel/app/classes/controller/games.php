@@ -188,7 +188,7 @@ class Controller_Games extends Controller_Template
 				}
 			}
 			foreach ($cards_list['minor_improvements'] as &$card_id) {
-				if (! preg_match('/^M.*_/', $card_id)) {
+				if ( (! preg_match('/_/', $card_id)) && (preg_match('/^M/', $card_id)) ) {
 					$card_id .= '_';
 				}
 			}
