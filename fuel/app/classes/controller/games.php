@@ -179,11 +179,16 @@ class Controller_Games extends Controller_Template
 			$draft_list[$field . 's'] = $drafts;
 		}
 
-		// Revisedの場合、大進歩番号を置き換え
+		// Revisedの場合、大進歩番号・泥沼番号を置き換え
 		$regulation_type = $this->template->content->data['regulation_type'];
 		if ($regulation_type == 3 or $regulation_type == 4) {
 			foreach ($cards_list['major_improvements'] as &$card_id) {
 				if (! preg_match('/_/', $card_id)) {
+					$card_id .= '_';
+				}
+			}
+			foreach ($cards_list['minor_improvements'] as &$card_id) {
+				if (! preg_match('/^M.*_/', $card_id)) {
 					$card_id .= '_';
 				}
 			}
