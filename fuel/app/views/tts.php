@@ -93,4 +93,11 @@
 	<p>
 		<a href="http://beginnerboardgames.hatenablog.com/entry/Tabeletop_Simulator" target="_blank" rel="noopener">Tabeletop Simulator MOD/ワークショップ/custom/自作解説講座/マルチ募集</a>
 	</p>
+
+	<h3>備忘録</h3>
+	<ul>
+		<li>カードを更新したいときは、新しいファイルをクラウドマネージャーにアップする。<br>
+			更新前と更新後のファイルURLをメモしておいて、セーブデータjsonの中身を一括置換する。
+		</li>
+	</ul>
 </div>
