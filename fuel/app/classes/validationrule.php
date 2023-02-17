@@ -62,6 +62,6 @@ class ValidationRule
 	public static function _validation_valid_other_id($val)
 	{
 		//その他の場合、なんでもOK
-		return _validation_valid_card_id($val);
+		return ValidationRule::_validation_valid_card_id($val);
 	}
 }
