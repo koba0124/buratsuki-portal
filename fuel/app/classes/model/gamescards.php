@@ -22,9 +22,15 @@ class Model_GamesCards
 			'occupations' => [],
 			'minor_improvements' => [],
 			'major_improvements' => [],
+			'others' => [],
 		];
 		foreach ($records as $record) {
-			$list[$record['type'] . 's'][] = $record['card_id'];
+			if($list[$record['type'] . 's']){
+				$list[$record['type'] . 's'][] = $record['card_id'];
+			} else {
+				$list['others'][] = $record['card_id'];
+			}
+
 		}
 		return $list;
 	}

@@ -174,7 +174,7 @@ class Controller_Games extends Controller_Template
 			// 前後の空白を削除
 			$cards = array_map('trim', $cards);
 			$cards_list[$field . 's'] = array_values(array_filter($cards, 'strlen'));
-			if($field == 'major_improvement'){continue;}
+			if(!Model_CardsMaster::is_draft($field)){continue;}
 			$drafts = Input::post('draft' .$field . 's', []);
 			$draft_list[$field . 's'] = $drafts;
 		}
@@ -287,7 +287,7 @@ class Controller_Games extends Controller_Template
 				$val->add($field_pr . '.' . $key, $label . '(' . ($key + 1) . '枚目)')
 					->add_rule('valid_' . $field . '_id', $card);
 			}
-			if($field == 'major_improvement'){continue;}
+			if(!Model_CardsMaster::is_draft($field)){continue;}
 			foreach ($drafts[$field_pr] as $key => $card) {
 				if(empty($card)){continue;}
 				$val->add('draft' . $field_pr . '.' . $key, $label . '(' . ($key + 1) . '枚目)')

@@ -110,7 +110,7 @@
 		ドラフトで取得したカード番号を半角英数字で入力してください。8～10枚目は引かれずに残ったカードです。
 	</p>
 	<?php foreach ($cards_type_list as $field => $label): 
-		if($field == 'major_improvement'){continue;}?>
+		if(!Model_CardsMaster::is_draft($field)){continue;}?>
 	<div class="row" id="<?= $field; ?>s_box">
 		<?php $cards = $draft_list[$field . 's'] ?? $draft_data[$field . 's'] ?>
 		<?php foreach ($cards as $key => $card): ?>

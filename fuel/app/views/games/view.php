@@ -91,7 +91,7 @@
 	<?= Html::anchor('#pack' . $order, "ドラフト譜はこちら");?>
 	<div class="row">
 		<?php foreach ($cards_type_list as $type => $label): 
-			if ($type == 'major_improvement') { continue; }?>
+			if (!Model_CardsMaster::is_draft($field)) { continue; }?>
 		<div class="col s12 m6 l6">
 			<h4 class="<?= $type; ?>-text"><?= $label; ?></h4>
 			<div class="collection">
@@ -139,7 +139,7 @@
 		<h4 class="orange-text" id="pack<?= $order; ?>"><?= $record['profile_fields']['screen_name'] ?? 'unknown'; ?>(<?= $order; ?>番手)のパック</h4>
 		<div class="row">
 			<?php foreach ($cards_type_list as $type => $label): 
-				if ($type == 'major_improvement') { continue; }?>
+				if (!Model_CardsMaster::is_draft($field)) { continue; }?>
 			<div class="col s12 m6 l6">
 				<h4 class="<?= $type; ?>-text"><?= $label; ?></h4>
 				<div class="collection">
