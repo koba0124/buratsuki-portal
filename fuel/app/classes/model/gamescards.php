@@ -77,10 +77,15 @@ class Model_GamesCards
 					->join(Model_DecksMaster::TABLE_NAME)
 					->on(Model_CardsMaster::TABLE_NAME . '.deck', '=', Model_DecksMaster::TABLE_NAME . '.deck');
 		$records = $query->execute()->as_array();
-
+		$list = ['occupations','minor_improvements','major_improvements'];
 		$data = [];
 		foreach ($records as $record) {
-			$data[$record['player_order']][$record['type'] . 's'][] = $record;
+			if(in_array($record['type'] . 's',$list)){
+				$data[$record['player_order']][$record['type'] . 's'][] = $record;
+			} else {
+				$data[$record['player_order']]['others'][] = $record;
+			}
+
 		}
 		return $data;
 	}
