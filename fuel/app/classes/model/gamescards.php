@@ -25,7 +25,7 @@ class Model_GamesCards
 			'others' => [],
 		];
 		foreach ($records as $record) {
-			if($list[$record['type'] . 's']){
+			if(array_key_exists($record['type'] . 's',$list)){
 				$list[$record['type'] . 's'][] = $record['card_id'];
 			} else {
 				$list['others'][] = $record['card_id'];

@@ -43,6 +43,19 @@ document.addEventListener('DOMContentLoaded', function() {
 		box.insertBefore(clone, box.lastElementChild);
 		M.updateTextFields();
 	});
+	let button_others = document.getElementById('others_button');
+	button_others.addEventListener('click', function() {
+		let box = document.getElementById('others_box');
+		let clone = box.lastElementChild.previousElementSibling.cloneNode(true);
+		let id = 'form_others_' + (box.childElementCount - 1);
+		let form = clone.firstElementChild;
+		let label = clone.lastElementChild;
+		form.value = null;
+		form.setAttribute('id', id);
+		label.setAttribute('for', id);
+		box.insertBefore(clone, box.lastElementChild);
+		M.updateTextFields();
+	});
 });
 
 let calcTotalPoints = () => {
