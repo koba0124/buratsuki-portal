@@ -187,9 +187,9 @@ class Model_CardsMaster
 	public static function is_draft($field)
 	{
 		switch ($field) {
-			case 'major_improvement':
+			case 'major_improvements':
 				return false;
-			case 'other':
+			case 'others':
 				return false;
 			default:
 				return true;
