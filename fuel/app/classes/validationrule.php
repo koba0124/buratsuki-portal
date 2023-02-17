@@ -58,4 +58,10 @@ class ValidationRule
 		$card_ids = Model_CardsMaster::get_card_ids_list('major_improvement');
 		return in_array($val, $card_ids);
 	}
+
+	public static function _validation_valid_other_id($val)
+	{
+		//その他の場合、なんでもOK
+		return _validation_valid_card_id($val);
+	}
 }

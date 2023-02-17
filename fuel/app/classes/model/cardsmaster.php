@@ -13,6 +13,7 @@ class Model_CardsMaster
 		'occupation' => '職業',
 		'minor_improvement' => '小さい進歩',
 		'major_improvement' => '大きい進歩',
+		'other' => 'その他',
 	];
 
 	/**
@@ -179,6 +180,19 @@ class Model_CardsMaster
 				return 'LF';
 			default:
 				return $card['type'];
+		}
+	}
+
+	//ドラフト対象かどうか
+	public static function is_draft($field)
+	{
+		switch ($field) {
+			case 'major_improvement':
+				return false;
+			case 'other':
+				return false;
+			default:
+				return true;
 		}
 	}
 }
