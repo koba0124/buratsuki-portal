@@ -192,6 +192,11 @@ class Controller_Games extends Controller_Template
 					$card_id .= '_';
 				}
 			}
+			foreach ($draft_list['minor_improvements'] as &$card_id) {
+				if ( (! preg_match('/_/', $card_id)) && (preg_match('/^M/', $card_id)) ) {
+					$card_id .= '_';
+				}
+			}
 		}
 
 		$this->template->content->cards_list = $cards_list;
