@@ -50,7 +50,7 @@ class Controller_Cards extends Controller_Template
 			'旧版基本セット' => ['E', 'I', 'K', 'EIK'],
 			'BI', 'CZ', 'FL', 'FR', 'G', 'NL', 'O', 'P', 'WA', 'WM', 'Z',
 			'Re',  'R5', 'A', 'B', 'C','D', 'Wizkids', 'L',
-			'リバイズドデッキ別' => ['Adeck', 'Bdeck', 'Cdeck', 'Ddeck']
+			'リバイズドデッキ別' => ['Adeck', 'Bdeck', 'Cdeck', 'Ddeck','Edeck']
 		];
 		$form_decks_list = [null => 'すべてのデッキ'];
 		$decks_keys = array_keys($decks_list);
